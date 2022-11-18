@@ -1,0 +1,568 @@
+.game{
+    &__skill{
+        position: absolute;
+        bottom:10px;
+        z-index: 100;
+        left:10px;
+        & ul{
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            & li{
+                border-radius: 2px;
+                position: relative;
+                margin:0 10px;
+                list-style: none;
+                width: 40px;
+                height: 40px;
+                border: 3px solid rgb(40, 32, 32);
+                background-color: black;
+                & span{
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                & div{
+                    display: none;
+                    z-index: 1;
+                }
+                & img{
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top:0;
+                    left:0;
+                }
+            }
+        }
+        &__overlay1.use{
+            display: block;
+            position: absolute;
+            bottom:0;
+            left:0;
+            width: 102%;
+            height: 100%;
+            background-color: black;
+            animation: skillOverlay 0.3s ease-out forwards;
+            opacity: 0.2;
+        }
+        &__overlay2.use{
+            display: block;
+            position: absolute;
+            bottom:0;
+            left:0;
+            width: 102%;
+            height: 100%;
+            background-color: black;
+            animation: skillOverlay 2.5s ease-out forwards;
+            opacity: 0.2;
+        }
+        &__overlay3.use{
+            display: block;
+            position: absolute;
+            bottom:0;
+            left:0;
+            width: 102%;
+            height: 100%;
+            background-color: black;
+            animation: skillOverlay 12s ease-out forwards;
+            opacity: 0.2;
+        }
+        &__overlay4.use{
+            display: block;
+            position: absolute;
+            bottom:0;
+            left:0;
+            width: 102%;
+            height: 100%;
+            background-color: black;
+            animation: skillOverlay 15.5s ease-out forwards;
+            opacity: 0.2;
+        }
+    }
+    &__info{
+        position: absolute;
+        top:10px;
+        left:10px;
+        display: flex;
+        z-index: 100;
+    }
+    &__avatar{
+        &__box{
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & img{
+                width: 38px;
+                height: 38px;
+            }
+        }
+    }
+    &__health{
+        margin-left: 2px;
+        width: 96px;
+        height: 20px;
+        &__box{
+            width: 96px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            border: 3px solid black;
+            margin-bottom: 5px;
+            overflow: hidden;
+            font-size: 10px;
+            position: relative;
+            color: #ffffff;
+            box-sizing: border-box;
+        }
+        &__hp{
+            position: absolute;
+            background-color: red;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        &__ki{
+            position: absolute;
+            right:20px;
+            background-color: blue;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    
+    }
+    &__banner{
+        position: fixed;
+        top:0;
+        left:0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        background-size: cover; 
+        // background-color: red;
+    }
+    &__menu{
+        z-index: 102;
+        position: absolute;
+        bottom:10px;
+        right:10px;
+    }
+    &__bag{
+        z-index: 10;
+        position: relative;
+        &__icon{
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            overflow: hidden;
+            & img{
+                width: 96px;
+                height: 48px;
+            }
+        }
+        &__container{
+            border-radius: 5px;
+            background-color: rgb(230,106,58);
+            border: 5px solid black;
+            position: absolute;
+            right:48px;
+            bottom:48px;
+            width: 300px;
+            height: 400px;
+            padding:5px;
+            box-sizing: border-box;
+        }
+        &__header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            position: relative;
+            margin-bottom: 20px;
+            &::after{
+                position: absolute;
+                bottom:-10px;
+                left:0;
+                content: "";
+                height: 3px;
+                width: 100%;
+                background-color: black;
+            }
+        }
+        & .fake{
+            flex:1;
+        }
+        &__name{
+            font-size: 24px;
+            font-weight: 700;
+            flex:1;
+            color:#ffffff;
+        }
+        &__close{
+            cursor: pointer;
+            text-align: center;
+            width: 24px;
+            height: 24px;
+            justify-self:flex-start;
+            transition: transform 0.125s;
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+        &__box{
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            align-items: flex-start;
+            // align-items: center;
+            justify-content: center;
+            width: 100%;
+            // height: 300px;
+            margin-bottom: 10px;
+            &__item{
+                position: relative;
+                margin: 3px 2px;
+                display: block;
+                width: 48px;
+                height: 48px;
+                border: 1px solid black;
+                background-color: rgb(221, 129, 93);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                // opacity: 0.825;
+                transition: opacity 0.125s;
+                &:hover{
+                background-color: rgb(206, 153, 132);
+                    & > .bags__group>.bags__info{
+                        display: flex;
+                    }
+                }
+                .bags{
+                    &__pet{
+                        width: 32px;
+                        height: 32px;
+                    }
+                    &__food{
+                        width: 32px;
+                        height: 32px;
+                    }
+                    &__info{
+                        display: none;
+                        position: absolute;
+                        top:110%;
+                        right:110%;
+                        z-index: 100;
+                        width: 100px;
+                        background-color: rgb(221, 129, 93);
+                        border: 1px solid black;
+                        flex-direction: column;
+                        padding:5px;
+                        box-shadow: 0 0 5px #000000;
+                        border-radius: 5px;
+                        &__img{
+                            padding-bottom: 5px;
+                            border-bottom: 1px solid black;
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 5px;
+                            & img{
+                                background-color: rgb(206, 153, 132);
+                                padding:2px;
+                                width: 24px;
+                                height: 24px;
+                                margin-right: 5px;
+                                border: 1px solid black;
+                            }
+                            & span{
+                                font-size: 14px;
+                                font-weight: 700;
+                                color:yellow;
+                            }
+                        }
+                        &__text{
+                            & h1{
+                                color:blue;
+                                font-size: 12px;
+                                font-weight: 700;
+                            }
+                            & span{
+                                font-size: 12px;
+                                color:#ffffff;
+                            }
+                        }
+                        // &__pet{
+                        //     position: absolute;
+                        //     &::after{
+                        //         padding:5px 0;
+                        //         cursor: default;
+                        //         position: absolute;
+                        //         width: 100px;
+                        //         z-index: 1;
+                        //         text-align: center;
+                        //         right: 16px;
+                        //         top: 16px;
+                        //         content: "Thú cưng đi theo vô dụng.";
+                        //     }
+                        // }
+                        // &__meat{
+                        //     position: absolute;
+                        //     &::after{
+                        //         cursor: default;
+                        //         padding:5px 0;
+                        //         position: absolute;
+                        //         z-index: 1;
+                        //         border: 1px solid black;
+                        //         background-color: rgb(221, 129, 93);
+                        //         text-align: center;
+                        //         right: 16px;
+                        //         top: 16px;
+                        //         content: "Húp đi tăng máu đó";
+                        //     }
+                        // }
+                        // &__fish{
+                        //     position: absolute;
+                        //     &::after{
+                        //         cursor: default;
+                        //         padding:5px 0;
+                        //         position: absolute;
+                        //         width: 100px;
+                        //         z-index: 1;
+                        //         border: 1px solid black;
+                        //         background-color: rgb(221, 129, 93);
+                        //         text-align: center;
+                        //         right: 16px;
+                        //         top: 16px;
+                        //         content: "Húp đi tăng mana đó";
+
+                        //     }
+                        // }
+                    }
+                    &__amount{
+                        position: absolute;
+                        bottom:0;
+                        right:0;
+                        color: #ffffff;
+                        font-size: 12px;
+                    }
+                    // &__item__box{
+                    //     top:50%;
+                    //     right:0;
+                    //     position: absolute; 
+                    // }
+                }
+            }
+        }
+        &__control{
+            display: flex;
+            flex-direction: row;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        &__gold{
+            display: flex;
+            align-items: center;
+            // justify-content: center;
+            background: linear-gradient(to right,rgb(221, 129, 93),rgb(230,106,58));
+            padding: 3px 0;
+            padding-right:20px;
+            border-radius: 5px;
+            padding-left: 5px;
+            // border: 2px solid black;
+            height: 30px;
+            & img{
+                width: 40px;
+                height: 25px;
+                margin-right: 5px;
+                background-size: 100%;
+            }
+            & span{
+                font-size: 12px;
+                color:yellow;
+            }
+        }
+        &__button{
+            flex:1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            & span{
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: rgb(221, 129, 93);
+                width: 72px;
+                height: 16px;
+                border: 2px solid black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 5px;
+                padding:3px 0;
+                color: black;
+            }
+            &.game__bag__all > span:nth-child(3){
+                color: #ffffff;
+            }
+            &.game__bag__pet > span:nth-child(2){
+                color: #ffffff;
+                
+            }
+            &.game__bag__food > span:nth-child(1){
+                color: #ffffff;
+
+                
+            }
+        }
+        &__info{
+            flex:1;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        &__paging{
+            display: flex;
+            align-items: center;
+            & img{
+                flex:1;
+                width: 32px;
+                height: 32px;
+                cursor: pointer;
+            }
+            & span{
+                flex:1;
+                text-align: center;
+            }
+        }
+    }
+    &__chat{
+        &__container{
+            & i{
+                position: absolute;
+                top:-12px;
+                right:-12px;
+                color:rgb(237, 71, 5);
+                cursor: pointer;
+                font-size: 24px;
+                &.down{
+                    transform: rotate(180deg);
+                }
+            }
+            &.down{
+                height: 400px;
+            }
+            &.up{
+                height:150px;
+                
+            }
+            border-radius: 5px;
+            background-color: rgba(230, 106, 58,.5);
+            border: 2px solid black;
+            position: absolute;
+            right: 50px;
+            bottom: 0px;
+            width: 300px;
+            height: 400px;
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            transition: 0.125s;
+        }
+        &__box{
+            flex:5;
+            background-color: rgba(221, 129, 93,.5);
+            margin-bottom: 10px;
+            overflow-y: auto;
+        }
+        &__item{
+            & .name{
+                color:green;
+                font-size: 14px;
+            }
+            & .content{
+                color:#ffffff;
+                font-size: 12px;
+            }
+        }
+        &__control{
+            font-size: 12px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+        &__changeSv{
+            border: 2px solid #000000;
+            color:#ffffff;
+            padding:2px;
+            background-color: rgb(230, 106, 58);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            width: 60px;
+            text-align: center;            
+            &__list{
+                position: absolute;
+                bottom:120%;
+                left:0;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid black;
+                width: 100%;
+                height: 200%;
+                justify-content: space-evenly;
+                align-items: center;
+                cursor: default;
+                background-color: grey;
+                pointer-events: none;
+                & span{
+                    pointer-events:auto;
+                    font-size: 10px;
+                    cursor: pointer;
+                    padding:2px;
+                    &:hover{
+                        background-color: rgb(230, 106, 58);
+                    }
+                }
+            }
+        }
+        &__input{
+            flex:1;
+            margin: 0 5px;
+            outline: none;
+            padding:2px 5px;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            border-bottom: 2px solid black;
+            background-color: transparent;
+            color:#ffffff;
+        }
+        &__submit{
+            cursor: pointer;
+            border: 2px solid #000000;
+            color:#ffffff;
+            padding:2px;
+            border-radius: 4px;
+            background-color: rgb(230, 106, 58);
+        }
+    }
+    
+}
+
+@keyframes skillOverlay {
+    0%{
+        height: 100%;
+    }
+    100%{
+        height: 0%;
+    }
+}

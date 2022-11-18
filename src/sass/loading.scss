@@ -1,0 +1,45 @@
+.loading{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    & img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    &__progress{
+        width: 100%;
+        position: absolute;
+        bottom:0;
+        left:0;
+        z-index: 1;
+        &__container{
+            position: absolute;
+            bottom:10px;
+            left:50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 20px;
+            border: 3px solid black;
+            background-color: grey;
+            display: flex;
+            align-items: center;
+            & span{
+                position: absolute;
+                top:50%;
+                left:50%;
+                transform: translate(-50%,-50%);
+                color:#ffffff;
+                font-size: 18px;
+            }
+        }
+        &__task{
+            height: 100%;
+            background-color: #f14b09;
+            transition: 0.125s;
+        }
+    }
+}

@@ -1,0 +1,54 @@
+.dashBoard{
+    &__login{
+        width: 100%;
+        height: 100%;
+        & .login{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            &__group{
+                position: relative;
+                width: 100%;
+                display: flex;
+                flex-direction:column;
+                & span{
+                    font-size: 16px;
+                    color:#f14b09;
+                    margin-bottom: 3px;
+                }
+                & input{
+                    outline: none;
+                    padding:10px 10px 5px 10px;
+                    border: none;
+                    border-bottom: 3px solid rgb(221, 129, 93);
+                    color:#f14b09;
+                    background-color: transparent;
+                    border-radius: 3px;
+                }
+                &__error{
+                    color:red;
+                    font-size: 12px;
+                    position: absolute;
+                    bottom:-20px;
+                    left:0;
+                }
+            }
+            & button{
+                width: 100px;
+                height: 50px;
+                border-radius: 5px;
+                text-align: center;
+                padding:10px;
+                cursor: pointer;
+                // background-color: rgb(17,17,17);
+                color:#f14b09;
+                font-weight: 700;
+                border: 3px solid #f14b09;
+                background-color: #111111;
+            }
+        }
+    }
+}

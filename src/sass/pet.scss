@@ -1,0 +1,99 @@
+.pet{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+    & img{
+        height: 192px;
+        width: 144px;
+        background-size: 192px 144px;
+    }
+    
+    &.Right{
+        &.walk{
+            & img{
+                animation: petRunRight 0.3s steps(3) infinite;
+            }
+        }
+        &.idle{
+            & img{
+                transform: translateY(0);
+            }
+        }
+    }
+    &.Left{
+        &.idle{
+            & img{
+                transform: translateY(-144px);
+            }
+        }
+        &.walk{
+            & img{
+                animation: petRunLeft 0.3s steps(3) infinite;
+            }
+        }
+    }
+    &.Top{
+        &.idle{
+            & img{
+                transform: translateY(-48px);
+            }
+        }
+        &.walk{
+            & img{
+                animation: petRunBottom 0.3s steps(3) infinite;
+            }
+        }
+    }
+    &.Bottom{
+        &.idle{
+            & img{
+                transform: translateY(-96px);
+            }
+        }
+        &.walk{
+            & img{
+                animation: petRunTop 0.3s steps(3) infinite;
+            }
+        }
+    }
+}
+
+@keyframes petRunRight{
+    0%{
+        transform: translate(0,0);
+    }
+    100%{
+        
+        transform: translate(-144px,0);
+    }
+}
+@keyframes petRunLeft{
+    0%{
+        transform: translate(0,-144px);
+    }
+    100%{
+        
+        transform: translate(-144px,-144px);
+    }
+}
+@keyframes petRunTop{
+    0%{
+        transform: translate(0,-96px);
+    }
+    100%{
+        
+        transform: translate(-144px,-96px);
+    }
+}
+@keyframes petRunBottom{
+    0%{
+        transform: translate(0,-48px);
+    }
+    100%{
+        
+        transform: translate(-144px,-48px);
+    }
+}

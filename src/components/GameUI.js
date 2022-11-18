@@ -1,0 +1,539 @@
+import React, { useEffect, useRef, useState } from 'react'
+import '../sass/gameUI.scss'
+
+import Skill3 from '../assets/UI/Skill3.png'
+import bag from '../assets/UI/bag.png'
+import close from '../assets/UI/close.png'
+import money from '../assets/UI/money.png'
+import btnNext from '../assets/UI/btnNext.png'
+import btnPrev from '../assets/UI/btnPrev.png'
+import voiceBags from '../assets/voices/bags.mp3'
+import Skill1 from '../assets/UI/Skill1.png'
+import Skill2 from '../assets/UI/Skill2.png'
+import Skill4 from '../assets/UI/Skill4.png'
+import facesetbox from '../assets/UI/FacesetBox.png'
+import redNinja_faceset from '../assets/characters/redNinja/UI/Faceset.png'
+import yellowNinja_faceset from '../assets/characters/yellowNinja/UI/Faceset.png'
+import blueNinja_faceset from '../assets/characters/blueNinja/UI/Faceset.png'
+import greenNinja_faceset from '../assets/characters/greenNinja/UI/Faceset.png'
+
+//food
+import meat from '../assets/food/Meat.png'
+import fish from '../assets/food/Fish.png'
+
+//Pets
+import cat1 from '../assets/pets/catAvata1.png'
+import cat2 from '../assets/pets/catAvata2.png'
+import cat3 from '../assets/pets/catAvata3.png'
+import cat4 from '../assets/pets/catAvata4.png'
+import dog1 from '../assets/pets/dogAvata1.png'
+import dog3 from '../assets/pets/dogAvata3.png'
+import dog4 from '../assets/pets/dogAvata4.png'
+import dog2 from '../assets/pets/dogAvata2.png'
+function GameUI({ playerType, handleEvent }) {
+    const arr = [cat1, cat2, cat3, cat4, dog1, dog2, dog3, dog4]
+    const [checkEvent, setCheckEvent] = useState(false)
+    const [filter, setFilter] = useState('all')
+    const [moneyCurrent, setMoneyCurrent] = useState(0)
+    const moneyValue = 1011000000;
+    
+    const kFormatter = (num) => {
+        return Math.abs(num) < 1000 ?
+            Math.sign(num) * Math.abs(num) :
+            Math.abs(num) >= 1000 && Math.abs(num) < 1000000 ?
+                Math.sign(num) * ((Math.abs(num) / 1000).toFixed(2)) + 'Ngàn' :
+                Math.abs(num) >= 1000000 && Math.abs(num) < 1000000000 ?
+                    Math.sign(num) * ((Math.abs(num) / 1000000).toFixed(2)) + 'Triệu' :
+                    Math.sign(num) * ((Math.abs(num) / 1000000000).toFixed(2)) + 'Tỉ'
+    }
+    useEffect(() => {
+        setMoneyCurrent(moneyValue)
+    }, [])
+    const handleShowEvent = () => {
+        new Audio(voiceBags).play();
+        handleEvent();
+        setCheckEvent(!checkEvent)
+        setFilter('all')
+    }
+    const handleFood = () => {
+        new Audio(voiceBags).play();
+
+        setFilter('food')
+    }
+    const handlePet = () => {
+        new Audio(voiceBags).play();
+
+        setFilter('pet')
+    }
+    const handleAll = () => {
+        new Audio(voiceBags).play();
+
+        setFilter('all')
+    }
+    
+    const [itemCurrent, setItemCurrent] = useState(null)
+    const [item, setItem] = useState([
+        {
+            type: 'pet',
+            itemId: 1,
+            itemAmount: 1,
+        },
+        {
+            itemAmount: 10,
+            type: 'food',
+            itemId: 1
+        }
+        , {
+            itemAmount: 10,
+            type: 'food',
+            itemId: 2
+        }
+    ])
+    const [pageCurrent, setPageCurrent] = useState(1)
+    const [bags, setbags] = useState(
+        [
+            {
+                id: 1,
+            },
+            {
+                id: 2,
+            },
+            {
+                id: 3,
+            },
+            {
+                id: 4,
+            },
+            {
+                id: 5,
+            },
+            {
+                id: 6,
+            },
+            {
+                id: 7,
+            },
+            {
+                id: 8,
+            },
+            {
+                id: 9,
+            },
+            {
+                id: 10,
+            },
+            {
+                id: 11,
+            },
+            {
+                id: 12,
+            },
+            {
+                id: 13,
+            },
+            {
+                id: 14,
+            },
+            {
+                id: 15,
+            },
+            {
+                id: 16,
+            },
+            {
+                id: 17,
+            },
+            {
+                id: 18,
+            },
+            {
+                id: 19,
+            },
+            {
+                id: 20,
+            },
+            {
+                id: 21,
+            },
+            {
+                id: 22,
+            },
+            {
+                id: 23,
+            },
+            {
+                id: 24,
+            },
+            {
+                id: 25,
+            },
+            {
+                id: 26,
+            },
+            {
+                id: 27,
+            },
+            {
+                id: 28,
+            },
+            {
+                id: 29,
+            },
+            {
+                id: 30,
+            },
+            {
+                id: 31,
+            },
+            {
+                id: 32,
+            },
+            {
+                id: 33,
+            },
+            {
+                id: 34,
+            },
+            {
+                id: 35,
+            },
+            {
+                id: 36,
+            },
+            {
+                id: 37,
+            },
+            {
+                id: 38,
+            },
+            {
+                id: 39,
+            },
+            {
+                id: 40,
+            }
+        ]
+    )
+    const handleNext = () => {
+        new Audio(voiceBags).play();
+
+        if (pageCurrent * 20 === bags.length) {
+            return
+        }
+        else setPageCurrent(pre => pre += 1)
+
+    }
+    const handlePrev = () => {
+        new Audio(voiceBags).play();
+
+        if (pageCurrent === 1) {
+            return
+        }
+        else setPageCurrent(pre => pre -= 1)
+    }
+    useEffect(() => {
+        let current;
+        if (filter === 'all') {
+            setItemCurrent(item)
+        }
+        else if (filter === 'food') {
+            current = item.filter(it => {
+                return it.type === 'food'
+            })
+            setItemCurrent(current)
+            
+        }
+        else if (filter === 'pet') {
+            current = item.filter(it => {
+                return it.type === 'pet'
+            })
+            setItemCurrent(current)
+        }
+    }, [filter, item])
+    const [statusChatBox, setStatusChatBox] = useState('up')
+    const handleResizeChat = () => {
+        statusChatBox === 'down' ? setStatusChatBox('up') : setStatusChatBox('down');
+    }
+    const [channel, setChannel] = useState('public')
+    const handleChannel = (a) => {
+        a === 'public' ? setChannel('public') : setChannel('private');
+    }
+    const [showChannel, setShowChannel] = useState(false)
+    const handleShowChannel = () => {
+        !showChannel ? setShowChannel(true) : setShowChannel(false)
+    }
+    const [listChatPublic, setListChatPublic] = useState([
+        {
+            idPlayer: 1,
+            name: 'Khoi',
+            content: "chat ở miền Nam"
+        },
+        {
+            idPlayer: 2,
+            name: 'KhoiLang',
+            content: "Tại thành phố HCM"
+        }
+        ,
+        {
+            idPlayer: 2,
+            name: 'KhoiLang',
+            content: "Tại thành phố HCM"
+        }
+        ,
+        {
+            idPlayer: 2,
+            name: 'KhoiLang',
+            content: "Tại thành phố HCM"
+        }
+])
+    const [listChatPrivate, setListChatPrivate] = useState([
+            {
+                idPlayer: 1,
+                name: 'Khoi',
+                content: "chat ở cả nước"
+            },
+            {
+                idPlayer: 2,
+                name: 'KhoiLang',
+                content: "Tại thành phố HCM"
+            }
+            ,
+            {
+                idPlayer: 2,
+                name: 'KhoiLang',
+                content: "Tại thành phố Đà Lạt"
+            }
+            ,
+            {
+                idPlayer: 2,
+                name: 'KhoiLang',
+                content: "Tại thành phố HCM"
+            }
+    ])
+    const scrollBottom = useRef(null)
+    useEffect(() => {
+        let xH;
+        if (scrollBottom !== null) {
+            xH = scrollBottom.current.scrollHeight;
+            scrollBottom.current.scrollTo(0, xH);
+        }
+    }, [scrollBottom, listChatPrivate,listChatPublic, statusChatBox, channel])
+    const [inputCurrent, setInputCurrent] = useState('')
+    const handleOncKeyDownInput = (e) => {
+        if (e.key === 'Enter' && inputCurrent !== '') {
+            setInputCurrent('')
+            channel === 'public' ? setListChatPublic(pre => [...pre, {
+                idPlayer: 2,
+                name: 'KhoiLang',
+                content: inputCurrent
+            }])
+                :setListChatPrivate(pre => [...pre, {
+                    idPlayer: 2,
+                    name: 'KhoiLang',
+                    content: inputCurrent
+                }])
+        }
+    }
+
+    return (
+        <>
+            <div className='game__skill'  >
+                <ul>
+                    <li>
+                        <span className='game__skill__attack1'></span>
+                        <div className='game__skill__overlay1'></div>
+                        <img src={Skill1} alt=""></img>
+                    </li>
+                    <li>
+                        <span className='game__skill__attack2'></span>
+                        <div className='game__skill__overlay2'></div>
+                        <img src={Skill2} alt=""></img>
+                    </li>
+                    <li>
+                        <span className='game__skill__attack3'></span>
+                        <div className='game__skill__overlay3'></div>
+                        <img src={Skill3} alt=""></img>
+                    </li>
+                    <li>
+                        <span className='game__skill__attack4'></span>
+                        <div className='game__skill__overlay4'></div>
+                        <img src={Skill4} alt=""></img>
+                    </li>
+                </ul>
+            </div>
+            <div className='game__info'>
+                <div className='game__avatar'>
+                    <div className='game__avatar__box' style={{background: `url(${facesetbox})`}}>
+                        <img src={playerType === "red"
+                            ? redNinja_faceset : playerType === "blue"
+                            ? blueNinja_faceset : playerType === "green"
+                            ? greenNinja_faceset : yellowNinja_faceset} alt="">
+                        </img>
+                    </div>
+                </div>
+                <div className='game__health'>
+                    <div className='game__health__box' >
+                        <span className='game__health__hp'></span>
+                        2000/2000
+                    </div>
+                    <div className='game__health__box' >
+                        <span  className='game__health__ki'></span>
+                        1500/2000
+                    </div>
+                </div>
+            </div>
+            <div className='game__menu'>
+                <div className='game__bag'>
+                    <div className='game__bag__icon' onClick={handleShowEvent}>
+                        <img src={bag}  alt=""></img>
+                    </div>
+                    {
+                        checkEvent&&<div className='game__bag__container'>
+                            <div className='game__bag__header'>
+                                <div className='fake'></div>
+                                <div className='game__bag__name'>TÚI</div>
+                                <img src={close} alt="" className='game__bag__close' onClick={handleShowEvent}></img>
+                            </div>
+                            <div className='game__bag__box'>
+                                {
+                                    bags && bags.map((e, i) => (
+                                        pageCurrent&&i+1<=pageCurrent*20&&i+1>(pageCurrent-1)*20&&
+                                        <div className='game__bag__box__item' key={e.id}>
+                                            {
+                                                itemCurrent && itemCurrent.map((item, j) => (
+                                                    i === j &&
+                                                        (
+                                                            item.type === 'pet'
+                                                                ?
+                                                                arr.map((array, index) => (
+                                                                    item.itemId === index + 1
+                                                                    && <div key={item} className="bags__group">
+                                                                            <img className="bags__pet" src={array} alt=""></img>
+                                                                            <div className='bags__amount'>x{item.itemAmount}</div>
+                                                                            <div className={`bags__info bags__info__pet`}>
+                                                                                <div className='bags__info__img'>
+                                                                                    <img src={array} alt="pet"></img>
+                                                                                    <span>Thú cưng</span>
+                                                                                </div>
+                                                                                <div className='bags__info__text'>
+                                                                                    <h1>Chi tiết:</h1>
+                                                                                    <span>Con pet vô dụng nhất phế vật thật sự.</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                ))
+                                                                :
+                                                            item.type === 'food' &&
+                                                            <div key={item} className="bags__group">
+                                                                <img className="bags__food" src={item.itemId === 1 ? meat : fish} alt=""></img>
+                                                                    <div className='bags__amount'>x{item.itemAmount}</div>
+                                                                    <div className={`bags__info bags__info__${item.itemId === 1 ? `meat` : `fish`}`}>
+                                                                        <div className='bags__info__img'>
+                                                                            <img src={item.itemId === 1 ? meat : fish} alt="food"></img>
+                                                                            <span>Thức ăn</span>
+                                                                        </div>
+                                                                        <div className='bags__info__text'>
+                                                                            <h1>Chi tiết:</h1>
+                                                                            <span>{item.itemId === 1 ? `Miếng thịt bò ăn vào tăng 1000hp` : `Thịt con cá ăn vào tăng 1000MP`}</span>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        )
+                                                ))
+                                                
+                                            }
+                                        </div>
+                                    
+                                    ))
+                                }
+                            </div>
+                            <div className='game__bag__control'>
+                                <div className='game__bag__info'>
+                                    <div className='game__bag__paging'>
+                                        <img src={btnPrev} onClick={handlePrev}></img>
+                                        <span>{pageCurrent}/2</span>
+                                        <img src={btnNext} onClick={handleNext}></img>
+                                    </div>
+                                    <div className='game__bag__gold'>
+                                        <img src={money} alt=""></img>
+                                        <span>{kFormatter(moneyCurrent)}</span>
+                                    </div>
+                                </div>
+                                <div className={`game__bag__button game__bag__${filter}`}>
+                                    <span onClick={handleFood}>Thức ăn</span>
+                                    <span onClick={handlePet}>Thú cưng</span>
+                                    <span onClick={handleAll}>Tất cả</span>
+                                </div>
+                            </div>
+                    </div>
+                    }
+                    
+                </div>
+                <div className='game__chat'>
+                    <div className={`game__chat__container ${statusChatBox}`}>
+                        <i className={`fa-solid fa-angles-up ${statusChatBox}`} onClick={handleResizeChat}></i>
+                        <div className='game__chat__box' ref={scrollBottom}>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm sao123123??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm sao??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm 12312312??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm sao??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm sao??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm sao??</span>
+                            </div><div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm sao312321??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>mày làm sa312312o??</span>
+                            </div>
+                            <div className='game__chat__item'>
+                                <span className='name'>Khôi:</span>
+                                <span className='content'>m123123ày làm sao??</span>
+                            </div>
+                        </div>
+                        <div className='game__chat__control'>
+                            <div className='game__chat__changeSv' onClick={handleShowChannel}>{ channel==='public'?'Cả nước':'Chỉ miền'}
+                                {
+                                    showChannel && (
+                                        <div className='game__chat__changeSv__list'>
+                                            <span onClick={()=>handleChannel('public')}>Cả nước</span>
+                                            <span onClick={()=>handleChannel('private')}>Chỉ miền</span>
+                                        </div>
+                                    )
+                                }
+                                
+                            </div>
+                            <input className='game__chat__input' value={inputCurrent} onKeyDown={handleOncKeyDownInput} onChange={(e)=>{setInputCurrent(e.target.value)}}></input>
+                            <span className='game__chat__submit'>gửi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </>
+    )
+}
+
+export default GameUI

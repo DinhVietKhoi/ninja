@@ -1,0 +1,381 @@
+.player{
+    &__container{
+        position: relative;
+        width: 48px;
+        height:48px;
+    }
+    &__main{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 48px;
+        height:48px;
+        overflow: hidden;
+        z-index: 10;
+        & img{
+            z-index: 1;
+            position: absolute;
+            display: none;
+        }
+        &.walk> #walk{
+            display: block;
+            width: 192px;
+            height:192px;
+            object-fit:cover;
+            &.Top{
+                animation: walkTop 0.5s steps(4) infinite;
+            }
+            &.Right{
+                animation: walkRight 0.5s steps(4) infinite;
+            }
+            &.Left{
+                animation: walkLeft 0.5s steps(4) infinite;
+            }
+            &.Bottom{
+                animation: walkBottom 0.5s steps(4) infinite;
+            }
+        }
+        &.idle> #idle{
+            display: block;
+            width: 192px;
+            height:48px;
+            object-fit:cover;
+            &.Top{
+                transform: translate(-48px,0);
+            }
+            &.Right{
+                transform: translate(-144px,0);
+            }
+            &.Left{
+                transform: translate(-96px,0);
+            }
+            &.Bottom{
+                transform: translate(0,0);
+                
+            }
+        }
+        &.dead> #dead{
+            display: block;
+            width: 48px;
+            height:48px;
+            object-fit:cover;
+            &.Top{
+                transform: translate(0,0);
+            }
+            &.Right{
+                transform: translate(0,0);
+            }
+            &.Left{
+                transform: translate(0,0);
+            }
+            &.Bottom{
+                transform: translate(0,0);
+            }
+        }
+        &.attack> #attack{
+            display: block;
+            width: 192px;
+            height:48px;
+            object-fit:cover;
+            &.Top{
+                transform: translate(-48px,0);
+            }
+            &.Right{
+                transform: translate(-144px,0);
+            }
+            &.Left{
+                transform: translate(-96px,0);
+            }
+            &.Bottom{
+                transform: translate(0,0);
+            }
+        }
+        &.jump{
+            animation: jump 0.5s ease-out;
+        }
+        &.jump> #jump{
+            display: block;
+            width: 192px;
+            height:48px;
+            object-fit:cover;
+            &.Top{
+                transform: translate(-48px,0);
+            }
+            &.Right{
+                transform: translate(-144px,0);
+            }
+            &.Left{
+                transform: translate(-96px,0);
+            }
+            &.Bottom{
+                transform: translate(0,0);
+            }
+        }
+    }
+    &__shadow{
+        display: block !important;
+        position: absolute;
+        bottom: -13px;
+        left: 5px;
+        width: 36px;
+        height: 21px;
+        transform: rotate3d(0.5, 0, 0, 4.2334rad);
+        z-index:2;
+    }
+    &__skill{
+        &__s1{
+            position: absolute;
+            top: calc(50% - 16px);
+            left: calc(50% - 16px);
+            width: 32px;
+            height: 32px;
+            overflow: hidden;
+            transform: rotate(0deg);
+            & img{
+                display: none;
+                width: 64px;
+                height: 32px;
+                animation: skill1 0.1s steps(2) infinite;
+            }
+        }
+        &__s2{
+            position: absolute;
+            top: calc(50% - 23px);
+            left: calc(50% - 23px);
+            width: 46px;
+            height: 46px;
+            overflow: hidden;
+            z-index: 1;
+            transform: rotate(0deg);
+            & img{
+                display: none;
+                width: 92px;
+                height: 46px;
+                animation: skill2 0.1s steps(2) infinite;
+            }
+        }
+        &__s3{
+            position: absolute;
+            top: calc(50% - 38px);
+            left: calc(50% - 36px);
+            width: 72px;
+            height: 78px;
+            overflow: hidden;
+            z-index: 11;
+            transform: rotate(0deg);
+            & img{
+                display: none;
+                width: 432px;
+                height: 78px;
+                animation: skill3 0.3s steps(5) infinite;
+            }
+        }
+        &__s4{
+            position: absolute;
+            top: calc(50% - 24px);
+            left: calc(50% - 24px);
+            width: 48px;
+            height: 48px;
+            overflow: hidden;
+            z-index: 1;
+            transform: rotate(0deg);
+            & img{
+                display: none;
+                width: 192px;
+                height: 48px;
+                animation: skill4 0.1s steps(4) infinite;
+            }
+        }
+        &__s1.use > img{
+            display: block;
+        }
+        &__s2.use > img{
+            display: block;
+        }
+        &__s3.use > img{
+            display: block;
+        }
+        &__s4.use > img{
+            display: block;
+        }
+        
+        &__s1.Right.use{
+            transform: translateX(100px);
+            transition: 0.3s ease-out;
+        }
+        &__s2.Right.use{
+            transform: translateX(200px);
+            transition: 0.3s ease-out;
+        }
+        &__s4.Right.use{
+            transform: translateX(300px);
+            transition: 0.3s ease-out;
+        }
+        &__s1.Bottom.use{
+            transform: translateY(100px);
+            transition: 0.3s ease-out;
+        }
+        &__s2.Bottom.use{
+            transform: translateY(200px);
+            transition: 0.3s ease-out;
+        }
+        &__s4.Bottom.use{
+            transform: translateY(300px);
+            transition: 0.3s ease-out;
+        }
+        &__s1.Left.use{
+            transform: translateX(-100px);
+            transition: 0.3s ease-out;
+        }
+        &__s2.Left.use{
+            transform: translateX(-200px);
+            transition: 0.3s ease-out;
+        }
+        &__s4.Left.use{
+            transform: translateX(-300px);
+            transition: 0.3s ease-out;
+        }
+        &__s1.Top.use{
+            transform: translateY(-100px);
+            transition: 0.3s ease-out;
+        }
+        &__s2.Top.use{
+            transform: translateY(-200px);
+            transition: 0.3s ease-out;
+        }
+        &__s4.Top.use{
+            transform: translateY(-300px);
+            transition: 0.3s ease-out;
+        }
+    }
+    &__name{
+        z-index: 100;
+        position: absolute;
+        
+        top:-35%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        font-weight: 700;
+        text-shadow: 0 0 1px #000000;
+        font-size: 18px;
+        &.main{
+            color:greenyellow;
+        }
+        &.other{
+            color:blue;
+        }
+        &.enemy{
+            color:red
+        }
+    }
+    &__title{
+        min-width: 200px;
+        text-align: center;
+        z-index: 100;
+        position: absolute;
+        top:-100%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        font-weight: 700;
+        text-shadow: 0 0 1px #000000;
+        font-size: 24px;
+        text-shadow: 0 0 5px red ;
+    }
+    &__team{
+        min-width: 50px;
+        text-align: center;
+        z-index: 100;
+        position: absolute;
+        top:-70%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        font-weight: 700;
+        font-size: 10px;
+        text-shadow: 0 0 5px yellow ;
+        color:red;
+        &.dao{
+            color:yellow;
+            text-shadow: 0 0 5px red ;
+        }
+    }
+}
+@keyframes skill1{
+    0%{
+        transform: translate(0,0);
+    }
+    100%{
+        
+        transform: translate(-64px,0);
+    }
+}
+@keyframes skill2{
+    0%{
+        transform: translate(0,0) ;
+        
+    }
+    100%{
+        transform: translate(-92px,0);
+    }
+}
+@keyframes skill3{
+    0%{
+        transform: translate(0,0) ;
+        
+    }
+    100%{
+        transform: translate(-360px,0);
+    }
+}
+@keyframes skill4{
+    0%{
+        transform: translate(0,0) ;
+        
+    }
+    100%{
+        transform: translate(-192px,0);
+    }
+}
+
+
+
+
+@keyframes jump{
+    0%,100%{
+        transform: translate(0,0);
+    }
+    50%{
+        transform: translate(0,-20px);
+    }
+}
+@keyframes walkRight{
+    0%{
+        transform: translate(-144px,0);
+    }
+    100%{
+        transform: translate(-144px,-100%);
+    }
+}
+@keyframes walkTop{
+    0%{
+        transform: translate(-48px,0);
+    }
+    100%{
+        transform: translate(-48px,-100%);
+    }
+}
+@keyframes walkLeft{
+    0%{
+        transform: translate(-96px,0);
+    }
+    100%{
+        transform: translate(-96px,-100%);
+    }
+}
+@keyframes walkBottom{
+    0%{
+        transform: translate(0,0);
+    }
+    100%{
+        transform: translate(0,-100%);
+    }
+}

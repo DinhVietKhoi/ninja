@@ -1,0 +1,112 @@
+
+.game{
+    width: 100%;
+    height: 100%;
+}
+.map{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    &__full{
+        // pointer-events: none;
+        position: absolute;
+        width: 3360px;
+        height: 1920px;
+        background-color: #ffffff;
+    }
+    &__object{
+        width: 288px;
+        height: 192px;
+        position: absolute;
+        top:863px;
+        left:1535px
+    }
+    &__forge{
+        // pointer-events: none;
+    }
+    &__fire{
+        width:288px;
+        height: 48px;
+        background-size: 48px 48px;
+        background-position: 0 -13px;
+        z-index: 100;
+    }
+    &__flag{
+        width: 240px;
+        height: 180px;
+        z-index: 100;
+        
+        position: absolute;
+        &.flag{
+            left:-350px;
+            top:105px;
+        }
+        &.flag1{
+            left:-350px;
+            top:-516px;
+        }
+        &.flag2{
+            left:560px;
+            top:105px;
+        }
+        &.flag3{
+            left:560px;
+            top:-516px;
+        }
+    }
+    &__view{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__fake{
+        // pointer-events: none;
+        top:0;
+        left:0;
+        z-index: -1;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: aquamarine;
+        & div{
+            width: 100%;
+            height: 100%;
+            background-size: 48px 48px;
+            background-repeat: repeat;
+        }
+    }
+    &__point{
+        position: absolute;
+        top: 232px;
+        left: 472px;
+        width: 48px;
+        height: 48px;
+        background-color: red;
+    }
+}
+
+@keyframes bonHinh{
+    0%{
+        transform: translate(0,0) ;
+        
+    }
+    100%{
+        transform: translate(-192px,0) ;
+    }
+}
+@keyframes bonHinhRotate{
+    0%{
+        transform: translate(0,0) rotate3d(0.5, 0, 0, 4.2334rad);
+        
+    }
+    100%{
+        transform: translate(-256px,0) rotate3d(0.5, 0, 0, 4.2334rad);
+    }
+}
+
+
