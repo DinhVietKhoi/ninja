@@ -1,14 +1,24 @@
 .choose{
-    background-color: rgb(221, 129, 93);
+    // background-color: rgb(221, 129, 93);
     width: 100%;
     height: 100%;
     position: relative;
+    &__bg{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
     &__player{
         width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        z-index: 1;
         &__container{
             display: flex;
             flex-direction: column;
@@ -78,7 +88,7 @@
                 }
                 &:nth-child(2){
                     font-size: 24px;
-                    color:#f14b09;
+                    color:yellow;
                 }
             }
         }
@@ -174,15 +184,18 @@
         }
         &__team{
             position: relative;
-            background-color: yellow;
+            background-color: red;
             flex:1;
             height: 100%;
             & img{
+                position: relative;
+                z-index: 2;
                 width: 100%;
                 height: 100%;
             }
         }
         &__zone{
+            z-index: 3;
             position: absolute;
             top:0;
             left:0;
@@ -258,6 +271,7 @@
             flex-direction: column;
             align-items: center;
             font-size: 24px;
+            z-index: 4;
             & input{
                 color:#f14b09;
                 width: 130px;
@@ -279,8 +293,20 @@
                 color:green;
             }
         }
+        &__start{
+            z-index: 1;
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            background-color: yellow;
+        }
     }
     &__play{
+        z-index: 4;
         position: absolute;
         bottom:10px;
         left:50%;
@@ -294,7 +320,7 @@
             }
         }
         & button{
-            width: 120px;
+            // width: 120px;
             height: 50px;
             border:3px solid #ffffff;
             font-size: 18px;

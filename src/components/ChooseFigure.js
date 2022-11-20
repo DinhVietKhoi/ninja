@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { ref, set, getDatabase, onValue} from 'firebase/database'
+import { ref, set} from 'firebase/database'
 import db from '../data/Firebase'
 
 import '../sass/chooseFigure.scss'
 import yellow from'../assets/background/yellowNinja.png'
 import green from'../assets/background/greenNinja.png'
 import blue from'../assets/background/blueNinja.png'
-import red from'../assets/background/redNinja.png'
+import red from '../assets/background/redNinja.png'
+import bgGreen from'../assets/background/bgGreen.jpg'
+import bgYellow from'../assets/background/bgYellow.jpg'
+import bgBlue from'../assets/background/bgBlue.jpg'
+import bgRed from'../assets/background/bgRed.jpg' 
 import mapBase from'../assets/background/mapbase.png'
 import bac from'../assets/background/pheBac.png'
 import trung from'../assets/background/pheTrung.png'
 import nam from'../assets/background/pheNam.png'
 import dao from'../assets/background/pheDao.png'
-function ChooseFigure({ listCharacter, idAccount }) {
-  console.log(idAccount)
+function ChooseFigure({ listCharacter, idAccount,handleGame,playerCurrent }) {
   //kiem tra da tao nhan vat chua
   const [checkPlayer, setCheckPlayer] = useState(null)
   //kiem tra khu vuc da chon
@@ -51,31 +54,67 @@ function ChooseFigure({ listCharacter, idAccount }) {
   useEffect(() => {
     let temp;
     if (idAccount !== null) {
-      temp = listCharacter.filter(e => e.idPlayer.value === idAccount)
+      temp = listCharacter.filter(e => e.idPlayer.value === idAccount && e.name.value!=="")
       if (temp.length < 1) {
         setCheckPlayer(false)
       }
       else {
         setCheckPlayer(true)
       }
+      
     }
-  }, [idAccount])
-
+  }, [idAccount,listCharacter])
   const handlePlay = () => {
     set(ref(db, `user/${idAccount}/isOnline`), {
-      value: 'Online',
+      isOnline: true,
     })
+    handleGame();
+  }
+  const handleCreate = () => {
+    set(ref(db, `user/${idAccount}/name`), {
+      value: namePlayer 
+    })
+    set(ref(db, `user/${idAccount}/team`), {
+      value: team 
+    })
+    set(ref(db, `user/${idAccount}/type`), {
+      type: checkClass 
+    })
+
+    setCheckPlayer(true)
   }
   return (
     <div className='choose'>
       {
+        checkPlayer&& <img className='choose__bg' src={
+          playerCurrent !== null && playerCurrent.type.type === 'red' ?
+            bgRed : playerCurrent.type.type === 'blue' ?
+              bgBlue : playerCurrent.type.type === 'yellow' ?
+                bgYellow : bgGreen
+        }
+          alt=""
+        ></img>
+      }
+      {
         checkPlayer ?
           <div className='choose__player'>
-            <div className='choose__player__container'>
-              <span>Cấp 1</span>
-              <span>Admin</span>
-              <img src={red} atl=""></img>
-            </div>
+            {
+            
+              playerCurrent !== null &&
+              <div className='choose__player__container'>
+                  <span>Cấp { playerCurrent.level.level}</span>
+                <span>{ playerCurrent.name.value}</span>
+                  <img
+                    src={
+                      playerCurrent.type.type === 'yellow' ?
+                      yellow : playerCurrent.type.type === 'red' ?
+                        red : playerCurrent.type.type === 'green' ?
+                          green : blue
+                    }
+                    alt="" ></img>
+              </div>
+            }
+            
           </div>
           :
           <div className='choose__create'>
@@ -111,6 +150,7 @@ function ChooseFigure({ listCharacter, idAccount }) {
                 
                 }
               </div>
+              <div className='choose__create__start'></div>
               <img src={mapBase} alt=""></img>
               <div className={`choose__create__zone ${team}`}>
                 <img src={bac} alt="" onClick={() => handleTeam('bac')}></img>
@@ -121,13 +161,19 @@ function ChooseFigure({ listCharacter, idAccount }) {
             </div>
             <div className='choose__create__name'>
               <input value={namePlayer} type='text' maxLength="10" onChange={(e) => { handleSetName(e) }}></input>
-              {namePlayer.length<=4 ?<span className='fail1'>Tên chưa đạt</span>:checkPlay&&checkPlay?<span className='success'>Tên có thể đặt</span>:<span className='fail2'>Tên đã được đặt</span>}
+              {namePlayer.length<=4 ?<span className='fail1'>Đặt tên nhân vật</span>:checkPlay&&checkPlay?<span className='success'>Tên có thể đặt</span>:<span className='fail2'>Tên đã được đặt</span>}
             </div>
           </div>
       }
-      <div className={`choose__play ${checkPlay?'disable':''}`}>
+      {
+        checkPlayer?<div className={`choose__play`}>
         <button onClick={handlePlay}>Chơi Game </button>
-      </div>
+      </div>:
+        <div className={`choose__play ${!checkPlay?'disable':''}`}>
+          <button onClick={handleCreate}>TẠO NHÂN VẬT</button>
+        </div>
+      }
+      
     </div>
   )
 }

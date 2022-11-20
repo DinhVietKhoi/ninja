@@ -46,7 +46,7 @@ import greenNinja_skill1 from '../assets/characters/greenNinja/Skill/Skill1.png'
 import greenNinja_skill2 from '../assets/characters/greenNinja/Skill/Skill2.png'
 import greenNinja_skill3 from '../assets/characters/greenNinja/Skill/Skill3.png'
 import greenNinja_skill4 from '../assets/characters/greenNinja/Skill/Skill4.png'
-function Player({useItem,playerType,statusPlayer,positionPlayer,bullet1,bullet2,bullet4,checkBull3}) {
+function Player({namePlayer,teamPlayer,playerType,statusPlayer,positionPlayer,bullet1,bullet2,bullet4,checkBull3}) {
     return (
         <>
             <div className="player__container">
@@ -149,13 +149,13 @@ function Player({useItem,playerType,statusPlayer,positionPlayer,bullet1,bullet2,
                                 </>
                 }
                 <div className='player__name enemy'>
-                    <span>Khoi</span>
+                    <span>{namePlayer}</span>
                 </div>
                 {/* <div className='player__title'>
                     <span>ĐỘC CÔ CẦU BẠI</span>
                 </div> */}
                 <div className='player__team nam trung bac dao'>
-                    <span>ĐẢO</span>
+                    <span>{teamPlayer}</span>
                 </div>
                 <img className="player__shadow" src={shadow} alt=""></img>
             </div>

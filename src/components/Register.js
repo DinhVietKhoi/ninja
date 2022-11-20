@@ -46,15 +46,38 @@ function Register({ listAccount, handleCheckNoti, idAccounrCurrent }) {
             handleCheckNoti()
             }
         else {
+            let idCurrent = idAccounrCurrent.idCurrent;
             if (checkRegister.length < 1 || checkRegister === undefined) {
                 toast.success('Đăng ký thành công!')
-                set(ref(db, `account/listAccount/${idAccounrCurrent.idCurrent}`), {
+                set(ref(db, `account/listAccount/${idCurrent}`), {
                     username: values.userName,
                     password: values.passWord,
-                    id: idAccounrCurrent.idCurrent++,
+                    id: idCurrent,
+                })
+                set(ref(db, `user/${idCurrent}`), {
+                    type: { type: "" },
+                    idPlayer: { value: idCurrent },
+                    isOnline: { isOnline: false },
+                    level: { level: 1 },
+                    localPlayer: {x: 448, y: 224},
+                    localMap: { x: 0, y: 0 },
+                    team: { value: "" },
+                    name: { value: "" },
+                    bag: {
+                        food: { hp: 10, mp: 10 },
+                        pet: { id: "" }
+                    },
+                    directionPlayer: { value: "Bottom" },
+                    statusPlayer: { value: "idle" },
+                    bullet: {
+                        bullet1: {value:""},
+                        bullet2: {value:""},
+                        bullet3: {value:""},
+                        bullet4: {value:""}
+                    }
                 })
                 set(ref(db, `account/idAccount`), {
-                    idCurrent: idAccounrCurrent.idCurrent++,
+                    idCurrent: idCurrent+=1,
                 })
                 
             }

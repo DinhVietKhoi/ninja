@@ -33,7 +33,6 @@ function Login({listAccount,handleCheckNoti,handleChoose,handleIdAccount}) {
         listAccount.map(user => {
           user.username===values.userName&&handleIdAccount(user.id);
         })
-        
         toast.success('Đăng nhập thành công!')
         handleChoose();
       }

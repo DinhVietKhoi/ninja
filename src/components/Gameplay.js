@@ -1,26 +1,26 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import '../sass/gamePlay.scss'
+import { ref, set, update} from 'firebase/database'
+import db  from '../data/Firebase'
 import colise from '../data/Colise'
 
 //Background
 import map1 from '../assets/background/map.png'
 import map2 from '../assets/background/mapForge.png'
 import water from '../assets/background/water.gif'
-//UI
-import background from '../assets/background/background.png'
+
 //npc
 import GameUI from './GameUI'
 import Player from './Player'
 import Pet from './Pet'
 
-function Gameplay() {
+function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
+    
     let Event = false;
     const [positionPlayer, setPositionPlayer] = useState("Bottom");
     const [statusPlayer, setStatusPlayer] = useState("idle")
-    const [mapMove, setMapMove] = useState({ x:0, y:0})
-    const [playerMove, setPlayerMove] = useState({ x: 448, y: 224 })
     const [playerType,setPlayerType] = useState('yellow')
-    const [petType,setPetType] = useState(1)
+    const [petType, setPetType] = useState(1)
     let coliseMap = []
     let boundary = []
     const [boundaryState,setBoundaryState] = useState([])
@@ -63,9 +63,16 @@ function Gameplay() {
         Skill3: false,
         Skill4: false,
     }
-    let MapPosition = { x: 0, y: 0 }
-    let playerPositon = { x: 448, y: 224 }
-    let speed = 1;
+
+    let MapPosition = { x: playerCurrent1.localMap.x, y: playerCurrent1.localMap.y }
+    let playerPositon = { x: playerCurrent1.localPlayer.x, y: playerCurrent1.localPlayer.y }
+     // const [mapMove, setMapMove] = useState({ x: playerCurrent.localMap.x, y: playerCurrent.localMap.y})
+    const [mapMove, setMapMove] = useState(MapPosition)
+     // const [playerMove, setPlayerMove] = useState({ x: playerCurrent.localPlayer.x, y: playerCurrent.localPlayer.y})
+    const [playerMove, setPlayerMove] = useState(playerPositon)
+    // let MapPosition = { x: 0, y: 0 }
+    // let playerPositon = { x: 448, y: 224 }
+    let speed = 1.2;
     let jumTime;
 
     const handleKeyup = (e) => {
@@ -365,17 +372,20 @@ function Gameplay() {
         
         if (checkBull1 === '') {
             setBullet1(``)
-
         }
         if (checkBull2 === '') {
             setBullet2(``)
-
         }
         if (checkBull4 === '') {
             setBullet4(``)
 
         }
-        // setBullet1('')
+        update(ref(db, `user/${idAccount}/bullet/`), {
+            bullet1: {value:bullet1},
+            bullet2: {value:bullet2},
+            bullet3: {value:checkBull3},
+            bullet4: {value:bullet4}
+        })
     }, [bullet1, bullet2, bullet4, checkBull1, checkBull2, checkBull3, checkBull4, positionPlayer])
     const handleEvent = useCallback(() => {
         Event = !Event;
@@ -398,66 +408,61 @@ function Gameplay() {
             })
         })
     }, [])
-    const loopRef = useRef();
     const animation = useCallback((e) => {
             movePlayer(Event);
             skillPlayer();
-            loopRef.current = requestAnimationFrame(animation)
+            requestAnimationFrame(animation)
         }, [])
     useEffect(() => {   
-        loopRef.current = requestAnimationFrame(animation);
-        return () => {
-            loopRef.current && cancelAnimationFrame(loopRef.current);
-        }
-    }, [loopRef, animation]) 
-    const handleGamePlay = {
-        useItem: ()=> {
-            //return item
-        },
-        changeHP: () => {
-            //return hp
-        },
-        changeMP: () => {
-            //return mp
-            
-        },
-        positionPlayer: () => {
-            //return x,y
-            
-        },
-        directionPlayer: () => {
-            //return left,right
-        },
-        statusPlayer: () => {
-            //return idle,walk
-        },
-        positionPet: () => {
-            //return x,y
-        },
-        directionPet: () => {
-            //return left,right
-        },
-        statusPet: () => {
-            //return idle,walk
-        },
-        register: () => {
-            
-        },
-        login: () => {
-            
-        }
-    }
+        animation();
+    }, []) 
+    // useEffect(() => {
+    //     // set(ref(db, `user/${idAccount}/localPlayer`), {
+    //     //     x: playerMove.x,
+    //     //     y: playerMove.y
+    //     // })
+    // }, [playerMove])
+    // useEffect(() => {
+        
+    // }, [mapMove])
+    // set(ref(db, `user/${idAccount}/localMap`), {
+    //     x: mapMove.x,
+    //     y: mapMove.y
+    // })
+    
+    useEffect(() => {
+        update(ref(db, `user/${idAccount}/statusPlayer`), {
+            value: statusPlayer,
+        })
+    }, [statusPlayer])
+    useEffect(() => {
+        update(ref(db, `user/${idAccount}/directionPlayer`), {
+            value: positionPlayer,
+        })
+    }, [positionPlayer])
+    useEffect(() => {
+        update(ref(db, `user/${idAccount}/localMap`), {
+            x: parseInt(mapMove.x),
+            y: parseInt(mapMove.y)
+        })
+    }, [mapMove])
+    useEffect(() => {
+        update(ref(db, `user/${idAccount}/localPlayer`), {
+            x: parseInt(playerMove.x),
+            y: parseInt(playerMove.y)
+        })
+    },[playerMove])
     return (
         <div className='game'>
             <div className='map'>
                 <div className="map__view">
                     <div className="map__full" style={{
                         background: `url(${map1}) no-repeat`,
-                        top: `${mapMove.y}px`,
-                        left: `${mapMove.x}px`,
+                        top: mapMove.y,
+                        left:mapMove.x,
+                        // transform: `translate(${mapMove.x}px,${mapMove.y}px)`,
                         backgroundSize:`3360px 1920px`
                     }}>
-                        <div className='map__forge' style={{ background: `url(${map2}) no-repeat`, width: '100%', height: '100%', backgroundSize: '100% 100%', position: 'absolute', zIndex: '100'}} ></div>
                         <div className='map__pets'>
                             <Pet
                                 petType={petType}
@@ -466,14 +471,41 @@ function Gameplay() {
                                 playerMove={playerMove}
                             />
                         </div>
+                        {
+                            listCharacter && listCharacter.map(e => [
+                                e.isOnline.isOnline===true&&e.idPlayer.value!==idAccount&&
+                                <div key={e} className='map__full__player' style={{transform:`translate(${e.localPlayer.x+20}px,${e.localPlayer.y}px)`}}>
+                                    <Player
+                                        statusPlayer={e.statusPlayer.value}
+                                        playerType={e.type.type}
+                                        namePlayer={e.name.value}
+                                        teamPlayer={e.team.value}
+                                        positionPlayer={e.directionPlayer.value}
+                                        bullet1={e.bullet.bullet1.value}
+                                        bullet2={e.bullet.bullet2.value}
+                                        bullet4={e.bullet.bullet4.value}
+                                        checkBull3={e.bullet.bullet3.value}
+                                    />
+                                </div>
+                            ])
+                        }
                     </div>
+                    <div className='map__forge' style={{
+                        background: `url(${map2}) no-repeat`,
+                        top: mapMove.y,
+                        left:mapMove.x,
+                        // transform: `translate(${mapMove.x}px,${mapMove.y}px)`,
+                        backgroundSize:`3360px 1920px`
+                    }} ></div>
                     <div className='map__fake'>
                         <div style={{ background: `url(${water})`, backgroundSize: '48px 48px' }}>
                         </div>
                     </div>
                     <Player
+                        namePlayer={playerCurrent.name.value}
+                        teamPlayer={playerCurrent.team.value}
                         statusPlayer={statusPlayer}
-                        playerType={playerType}
+                        playerType={playerCurrent.type.type}
                         positionPlayer={positionPlayer}
                         bullet1={bullet1}
                         bullet2={bullet2}
