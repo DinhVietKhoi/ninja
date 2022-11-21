@@ -475,7 +475,7 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            transition: 0.125s;
+            transition: 0.095s;
         }
         &__box{
             flex:5;
@@ -485,10 +485,19 @@
         }
         &__item{
             & .name{
-                color:green;
+                color:blue;
                 font-size: 14px;
+                &.noti{
+                    color:grey;
+                }
+                &.main{
+                    color:greenyellow
+                }
             }
             & .content{
+                &.noti{
+                    color:grey;
+                }
                 color:#ffffff;
                 font-size: 12px;
             }

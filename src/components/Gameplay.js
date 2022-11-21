@@ -72,7 +72,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     const [playerMove, setPlayerMove] = useState(playerPositon)
     // let MapPosition = { x: 0, y: 0 }
     // let playerPositon = { x: 448, y: 224 }
-    let speed = 1.2;
+    let speed = 2;
     let jumTime;
 
     const handleKeyup = (e) => {
@@ -411,7 +411,10 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     const animation = useCallback((e) => {
             movePlayer(Event);
             skillPlayer();
-            requestAnimationFrame(animation)
+            setTimeout(() => {
+                animation()
+            },20)
+            // requestAnimationFrame()
         }, [])
     useEffect(() => {   
         animation();
@@ -485,6 +488,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                                         bullet2={e.bullet.bullet2.value}
                                         bullet4={e.bullet.bullet4.value}
                                         checkBull3={e.bullet.bullet3.value}
+                                        prove="friend"    
                                     />
                                 </div>
                             ])
@@ -511,8 +515,9 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                         bullet2={bullet2}
                         bullet4={bullet4}
                         checkBull3={checkBull3}
+                        prove="main"    
                     />
-                    <GameUI playerType={playerType} handleEvent={handleEvent} />
+                    <GameUI playerCurrent={ playerCurrent} listCharacter={listCharacter} idAccount={idAccount} playerType={playerType} handleEvent={handleEvent} />
                 </div>
             </div > 
         </div>

@@ -121,7 +121,6 @@ function App() {
           }
         })
         setGetDB(false);
-        console.log(getDB)
       }
     }
     

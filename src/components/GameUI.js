@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import '../sass/gameUI.scss'
+import { onValue, ref, onDisconnect, set } from 'firebase/database'
+import db from '../data/Firebase'
 
+
+
+//UI
 import Skill3 from '../assets/UI/Skill3.png'
 import bag from '../assets/UI/bag.png'
 import close from '../assets/UI/close.png'
@@ -30,7 +35,15 @@ import dog1 from '../assets/pets/dogAvata1.png'
 import dog3 from '../assets/pets/dogAvata3.png'
 import dog4 from '../assets/pets/dogAvata4.png'
 import dog2 from '../assets/pets/dogAvata2.png'
-function GameUI({ playerType, handleEvent }) {
+
+
+
+function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEvent }) {
+    const [arrIdSameArea, setArrIdSameArea] = useState([''])
+
+    const [idChatCurrent, setIdChatCurrent] = useState(null)
+    const [listChatCurrent, setListChatCurrent] = useState([''])
+
     const arr = [cat1, cat2, cat3, cat4, dog1, dog2, dog3, dog4]
     const [checkEvent, setCheckEvent] = useState(false)
     const [filter, setFilter] = useState('all')
@@ -48,25 +61,46 @@ function GameUI({ playerType, handleEvent }) {
     }
     useEffect(() => {
         setMoneyCurrent(moneyValue)
+        onValue((ref(db, `chat/all/idCurrent`)), (snapshot) => {
+            const data = snapshot.val().value;
+            setIdChatCurrent(data)
+        })
+        let list = {value:"key"}; 
+        onValue((ref(db, `chat/all/content`)), (snapshot) => {
+            try {
+                const data = snapshot.val(); 
+                list = Object.values(data)
+                setListChatCurrent(list)
+            } catch (error) {
+                // ...do something with error
+            }
+        })
+        if (playerCurrent !== null && listCharacter !== null) {
+            
+            let tmp = listCharacter.filter(e => (
+                playerCurrent.team.value===e.team.value
+            ))
+            tmp.map(e => {
+                setArrIdSameArea(pre=>[...pre,e.idPlayer.value])
+            })
+        }
     }, [])
+    
+
     const handleShowEvent = () => {
-        new Audio(voiceBags).play();
         handleEvent();
         setCheckEvent(!checkEvent)
         setFilter('all')
     }
     const handleFood = () => {
-        new Audio(voiceBags).play();
 
         setFilter('food')
     }
     const handlePet = () => {
-        new Audio(voiceBags).play();
 
         setFilter('pet')
     }
     const handleAll = () => {
-        new Audio(voiceBags).play();
 
         setFilter('all')
     }
@@ -215,16 +249,12 @@ function GameUI({ playerType, handleEvent }) {
         ]
     )
     const handleNext = () => {
-        new Audio(voiceBags).play();
-
         if (pageCurrent * 20 === bags.length) {
             return
         }
         else setPageCurrent(pre => pre += 1)
-
     }
     const handlePrev = () => {
-        new Audio(voiceBags).play();
 
         if (pageCurrent === 1) {
             return
@@ -262,79 +292,70 @@ function GameUI({ playerType, handleEvent }) {
     const handleShowChannel = () => {
         !showChannel ? setShowChannel(true) : setShowChannel(false)
     }
-    const [listChatPublic, setListChatPublic] = useState([
-        {
-            idPlayer: 1,
-            name: 'Khoi',
-            content: "chat ở miền Nam"
-        },
-        {
-            idPlayer: 2,
-            name: 'KhoiLang',
-            content: "Tại thành phố HCM"
-        }
-        ,
-        {
-            idPlayer: 2,
-            name: 'KhoiLang',
-            content: "Tại thành phố HCM"
-        }
-        ,
-        {
-            idPlayer: 2,
-            name: 'KhoiLang',
-            content: "Tại thành phố HCM"
-        }
-])
-    const [listChatPrivate, setListChatPrivate] = useState([
-            {
-                idPlayer: 1,
-                name: 'Khoi',
-                content: "chat ở cả nước"
-            },
-            {
-                idPlayer: 2,
-                name: 'KhoiLang',
-                content: "Tại thành phố HCM"
-            }
-            ,
-            {
-                idPlayer: 2,
-                name: 'KhoiLang',
-                content: "Tại thành phố Đà Lạt"
-            }
-            ,
-            {
-                idPlayer: 2,
-                name: 'KhoiLang',
-                content: "Tại thành phố HCM"
-            }
-    ])
     const scrollBottom = useRef(null)
     useEffect(() => {
-        let xH;
-        if (scrollBottom !== null) {
+        if (listChatCurrent !== null && arrIdSameArea !== null &&scrollBottom !== null) {
+            let xH;
             xH = scrollBottom.current.scrollHeight;
-            scrollBottom.current.scrollTo(0, xH);
-        }
-    }, [scrollBottom, listChatPrivate,listChatPublic, statusChatBox, channel])
-    const [inputCurrent, setInputCurrent] = useState('')
-    const handleOncKeyDownInput = (e) => {
-        if (e.key === 'Enter' && inputCurrent !== '') {
-            setInputCurrent('')
-            channel === 'public' ? setListChatPublic(pre => [...pre, {
-                idPlayer: 2,
-                name: 'KhoiLang',
-                content: inputCurrent
-            }])
-                :setListChatPrivate(pre => [...pre, {
-                    idPlayer: 2,
-                    name: 'KhoiLang',
-                    content: inputCurrent
-                }])
-        }
-    }
+            setTimeout(() => {
+                scrollBottom.current.scrollTo(0, xH);
+            }, 100)
+            
+            if (listChatCurrent.length > 100) {
 
+                let id = idChatCurrent;
+                set(ref(db, `chat/all/content/`), {
+                })
+                set(ref(db, `chat/all/content/${id}`), {
+                    content: 'Clear tin nhắn xin lỗi vì sự bất tiện này!!',
+                    idPlayer: 0,
+                    type: 'all',
+                })
+                set(ref(db, `chat/all/idCurrent`), {
+                    value: id += 1
+                })
+            }
+        }
+    }, [listChatCurrent,arrIdSameArea,channel,statusChatBox,idChatCurrent])
+    const [inputCurrent, setInputCurrent] = useState('')
+    const handleSubmit = (e) => {
+        let id = idChatCurrent;
+        if (e.key === 'Enter' && inputCurrent !== '') {
+            set(ref(db, `chat/all/content/${id}`), {
+                content: inputCurrent,
+                idPlayer: idAccount,
+                type: channel,
+            })
+            
+            set(ref(db, `chat/all/idCurrent`), {
+                value: id += 1
+            })
+            setInputCurrent('')
+        }
+        if (e === 'click' && inputCurrent !== '') {
+            set(ref(db, `chat/all/content/${id}`), {
+                content: inputCurrent,
+                idPlayer: idAccount,
+                type: channel,
+            })
+            setInputCurrent('')
+        }
+        // console.log(e.target[0].value)
+
+        // e.preventDefault();  
+
+    }
+    // console.log(inputCurrent)
+    const handleGetNameWithId = (a) => {
+        if (listCharacter !== null) {
+            let tmp = listCharacter.filter(e => (
+                e.idPlayer.value === a
+            ))
+            
+            return tmp[0].name.value;
+        }
+        
+    }
     return (
         <>
             <div className='game__skill'  >
@@ -472,61 +493,67 @@ function GameUI({ playerType, handleEvent }) {
                 <div className='game__chat'>
                     <div className={`game__chat__container ${statusChatBox}`}>
                         <i className={`fa-solid fa-angles-up ${statusChatBox}`} onClick={handleResizeChat}></i>
-                        <div className='game__chat__box' ref={scrollBottom}>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm sao123123??</span>
+                            <div className='game__chat__box' ref={scrollBottom}>
+                                {listChatCurrent !== null&&arrIdSameArea!==null&&(
+                                    channel === 'public' ?
+                                            listChatCurrent.map(e => [
+                                                (e.type === 'public'||e.type==='all') && <div key={e} className='game__chat__item'>
+                                                    {
+                                                        e.idPlayer === 0 ? <>
+                                                            <span className={`name noti`}>--THÔNG BÁO--:</span>
+                                                            <span className='content noti'>{e.content}</span>
+                                                        </>
+                                                            :
+                                                            <>
+                                                                <span className={`name ${idAccount === e.idPlayer && 'main'}`}>{handleGetNameWithId(e.idPlayer)}:</span>
+                                                                <span className='content'>{e.content}</span>
+                                                            </>
+                                                    }
+                                                </div>
+                                            ])
+                                        :
+                                        listChatCurrent.map(e => [
+                                            (e.type === 'private' || e.type === 'all') &&
+                                            <div key={e} className='game__chat__item'>
+                                                {
+                                                        e.idPlayer === 0 ? <>
+                                                            <span className={`name noti`}>--THÔNG BÁO--:</span>
+                                                            <span className='content noti'>{e.content}</span>
+                                                        </>
+                                                            :arrIdSameArea.includes(e.idPlayer) === true&&
+                                                            <>
+                                                                <span className={`name ${idAccount === e.idPlayer && 'main'}`}>{handleGetNameWithId(e.idPlayer)}:</span>
+                                                                <span className='content'>{e.content}</span>
+                                                            </>
+                                                    }
+                                            </div>
+                                        ])
+                                )
+                            }
                             </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm sao??</span>
-                            </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm 12312312??</span>
-                            </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm sao??</span>
-                            </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm sao??</span>
-                            </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??mày làm s123123ao??</span>
-                            </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm sao??</span>
-                            </div><div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm sao312321??</span>
-                            </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>mày làm sa312312o??</span>
-                            </div>
-                            <div className='game__chat__item'>
-                                <span className='name'>Khôi:</span>
-                                <span className='content'>m123123ày làm sao??</span>
-                            </div>
-                        </div>
                         <div className='game__chat__control'>
-                            <div className='game__chat__changeSv' onClick={handleShowChannel}>{ channel==='public'?'Cả nước':'Chỉ miền'}
+                            <div className='game__chat__changeSv' onClick={handleShowChannel}>{ channel==='public'?'Cả nước':'Khu vực'}
                                 {
                                     showChannel && (
                                         <div className='game__chat__changeSv__list'>
                                             <span onClick={()=>handleChannel('public')}>Cả nước</span>
-                                            <span onClick={()=>handleChannel('private')}>Chỉ miền</span>
+                                            <span onClick={()=>handleChannel('private')}>Khu vực</span>
                                         </div>
                                     )
                                 }
                                 
                             </div>
-                            <input className='game__chat__input' value={inputCurrent} onKeyDown={handleOncKeyDownInput} onChange={(e)=>{setInputCurrent(e.target.value)}}></input>
-                            <span className='game__chat__submit'>gửi</span>
+                            <input
+                                onKeyDown={handleSubmit}
+                                className='game__chat__input'
+                                value={inputCurrent}
+                                onChange={(e) => { setInputCurrent(e.target.value) }}
+                                maxLength="40"
+                            ></input>
+                            <span
+                                onClick={() => handleSubmit('click')}
+                                className='game__chat__submit'
+                            >gửi</span>
                         </div>
                     </div>
                 </div>
