@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ninja/static/css/main.bb424028.css",
-    "main.js": "/ninja/static/js/main.7736446f.js",
+    "main.css": "/ninja/static/css/main.6e1571fe.css",
+    "main.js": "/ninja/static/js/main.4e8356e8.js",
     "static/media/bgGreen.jpg": "/ninja/static/media/bgGreen.b3c26c3c10e880f6ad18.jpg",
     "static/media/background.png": "/ninja/static/media/background.aba9b8077c326e670734.png",
     "static/media/backgroundLoad.png": "/ninja/static/media/backgroundLoad.48b7064e6fae1d85a790.png",
@@ -26,11 +26,11 @@
     "static/media/bgYellow.jpg": "/ninja/static/media/bgYellow.0a33683da2881ab601fc.jpg",
     "static/media/bags.mp3": "/ninja/static/media/bags.fce692d41df7bcafaafc.mp3",
     "index.html": "/ninja/index.html",
-    "main.bb424028.css.map": "/ninja/static/css/main.bb424028.css.map",
-    "main.7736446f.js.map": "/ninja/static/js/main.7736446f.js.map"
+    "main.6e1571fe.css.map": "/ninja/static/css/main.6e1571fe.css.map",
+    "main.4e8356e8.js.map": "/ninja/static/js/main.4e8356e8.js.map"
   },
   "entrypoints": [
-    "static/css/main.bb424028.css",
-    "static/js/main.7736446f.js"
+    "static/css/main.6e1571fe.css",
+    "static/js/main.4e8356e8.js"
   ]
 }
