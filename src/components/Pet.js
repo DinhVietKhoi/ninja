@@ -51,7 +51,11 @@ function Pet({ petType, positionPlayer, statusPlayer, playerMove }) {
         setStatusPet('Idle')
     }, [])
     return (
-        <div className={`pet ${petPositon} ${statusPet}`} style={{top:petMove.y,left:petMove.x}}>
+        <div className={`pet ${petPositon} ${statusPet}`} style={{
+            top: petMove.y, left: petMove.x
+            // transform: `translate(${petMove.x}px,${petMove.y}px)`,
+
+        }}>
             <img src={arr.filter((e,index) => (
                 index===petType
             ))}

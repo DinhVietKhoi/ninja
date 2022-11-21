@@ -66,6 +66,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
 
     let MapPosition = { x: playerCurrent1.localMap.x, y: playerCurrent1.localMap.y }
     let playerPositon = { x: playerCurrent1.localPlayer.x, y: playerCurrent1.localPlayer.y }
+    
      // const [mapMove, setMapMove] = useState({ x: playerCurrent.localMap.x, y: playerCurrent.localMap.y})
     const [mapMove, setMapMove] = useState(MapPosition)
      // const [playerMove, setPlayerMove] = useState({ x: playerCurrent.localPlayer.x, y: playerCurrent.localPlayer.y})
@@ -174,8 +175,8 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     const handleStop = (a, b) => {
         return (
             a.x + 60 >= b.x &&
-            a.x <= b.x + 24 &&
-            a.y <= b.y + 24 &&
+            a.x <= b.x+24 &&
+            a.y <= b.y+32 &&
             a.y + 48 >= b.y
         )
     }
@@ -413,7 +414,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             skillPlayer();
             setTimeout(() => {
                 animation()
-            },20)
+            },(1000/60))
             // requestAnimationFrame()
         }, [])
     useEffect(() => {   
