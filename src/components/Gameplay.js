@@ -66,14 +66,16 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
 
     let MapPosition = { x: playerCurrent1.localMap.x, y: playerCurrent1.localMap.y }
     let playerPositon = { x: playerCurrent1.localPlayer.x, y: playerCurrent1.localPlayer.y }
-    
+    // let MapPosition = { x: 0, y: 0 }
+    // let playerPositon = { x: 448, y: 224 }
+    // let checkDU = 0;
+    // let checkLR = 0;
      // const [mapMove, setMapMove] = useState({ x: playerCurrent.localMap.x, y: playerCurrent.localMap.y})
     const [mapMove, setMapMove] = useState(MapPosition)
      // const [playerMove, setPlayerMove] = useState({ x: playerCurrent.localPlayer.x, y: playerCurrent.localPlayer.y})
     const [playerMove, setPlayerMove] = useState(playerPositon)
-    // let MapPosition = { x: 0, y: 0 }
-    // let playerPositon = { x: 448, y: 224 }
-    let speed = 2;
+    
+    let speed = 3;
     let jumTime;
 
     const handleKeyup = (e) => {
@@ -176,12 +178,13 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
         return (
             a.x + 60 >= b.x &&
             a.x <= b.x+24 &&
-            a.y <= b.y+32 &&
+            a.y <= b.y+24 &&
             a.y + 48 >= b.y
         )
     }
     //handle move of player
     const movePlayer = (Event) => {
+        console.log(playerPositon)
         if (Event) {
             setStatusPlayer('idle')
             return;
@@ -206,7 +209,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             // setTopMap(pre=>pre+=speed)
             for (let e of boundary) {
                 let bou = e;
-                bou = { ...bou,y: bou.y + 1};
+                bou = { ...bou,y: bou.y + 3};
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
                     break;
@@ -225,7 +228,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             // setTopMap(pre => pre -= speed)
             for (let e of boundary) {
                 let bou = e;
-                bou = { ...bou,y: bou.y - 1};
+                bou = { ...bou,y: bou.y - 3};
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
                     break;
@@ -244,7 +247,14 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             // setLeftMap(pre => pre += speed)
             for (let e of boundary) {
                 let bou = e;
-                bou = { ...bou, x: bou.x + 1};
+                // if (checkDU === 1) {
+                //     bou = { y:bou.y+1, x: bou.x + 1};
+                // }
+                // else if (checkDU === -1) {
+                //     bou = { y:bou.y-1, x: bou.x + 1};
+                // }
+                bou = { ...bou, x: bou.x + 3};
+
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
                     break;
@@ -263,7 +273,14 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             // setLeftMap(pre => pre -= speed)
             for (let e of boundary) {
                 let bou = e;
-                bou = { ...bou, x: bou.x - 1};
+                // if (checkDU === 1) {
+                //     bou = { y:bou.y+1, x: bou.x - 1};
+                // }
+                // else if (checkDU === -1) {
+                //     bou = { y:bou.y-1, x: bou.x - 1};
+                // }
+                bou = { ...bou, x: bou.x - 3};
+
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
                     break;
@@ -392,7 +409,9 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
         Event = !Event;
     }, [])
     useEffect(() => {
-        requestAnimationFrame(animation)
+        // requestAnimationFrame(animation)
+    startAnimating(60)
+
         for (let i = 0; i < colise.length; i += 70){
             coliseMap.push(colise.slice(i,70+i))
         }
@@ -409,30 +428,51 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             })
         })
     }, [])
+    
+    
+    let fps, fpsInterval, startTime, now, then, elapsed;
+
+    const startAnimating= (fps)=> {
+        fpsInterval = 1000 / fps;
+        then = Date.now();
+        startTime = then;
+        animation();
+    }
+    // const animation = useCallback((e) => {
+    //     movePlayer(Event);
+    //     skillPlayer();
+    //         setTimeout(() => {
+    //             animation()
+    //         },(1000/80))
+    //         // requestAnimationFrame()
+    // }, [])
     const animation = useCallback((e) => {
+        requestAnimationFrame(animation);
+        now = Date.now();
+        elapsed = now - then;
+        if (elapsed > fpsInterval) {
+            then = now - (elapsed % fpsInterval);
             movePlayer(Event);
             skillPlayer();
-            setTimeout(() => {
-                animation()
-            },(1000/60))
-            // requestAnimationFrame()
-        }, [])
-    useEffect(() => {   
-        animation();
-    }, []) 
-    // useEffect(() => {
-    //     // set(ref(db, `user/${idAccount}/localPlayer`), {
-    //     //     x: playerMove.x,
-    //     //     y: playerMove.y
-    //     // })
-    // }, [playerMove])
-    // useEffect(() => {
-        
-    // }, [mapMove])
-    // set(ref(db, `user/${idAccount}/localMap`), {
-    //     x: mapMove.x,
-    //     y: mapMove.y
-    // })
+        }
+    }, [])
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     useEffect(() => {
         update(ref(db, `user/${idAccount}/statusPlayer`), {
