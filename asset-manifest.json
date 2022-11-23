@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ninja/static/css/main.10a3991f.css",
-    "main.js": "/ninja/static/js/main.0dda8b56.js",
+    "main.css": "/ninja/static/css/main.97fad02c.css",
+    "main.js": "/ninja/static/js/main.32fb7f97.js",
     "static/media/bgGreen.jpg": "/ninja/static/media/bgGreen.b3c26c3c10e880f6ad18.jpg",
     "static/media/background.png": "/ninja/static/media/background.aba9b8077c326e670734.png",
     "static/media/backgroundLoad.png": "/ninja/static/media/backgroundLoad.48b7064e6fae1d85a790.png",
@@ -24,13 +24,12 @@
     "static/media/cat4.png": "/ninja/static/media/cat4.696b39b8be9ceda97d3a.png",
     "static/media/dog4.png": "/ninja/static/media/dog4.724eaffd168e5f4d47e8.png",
     "static/media/bgYellow.jpg": "/ninja/static/media/bgYellow.0a33683da2881ab601fc.jpg",
-    "static/media/bags.mp3": "/ninja/static/media/bags.fce692d41df7bcafaafc.mp3",
     "index.html": "/ninja/index.html",
-    "main.10a3991f.css.map": "/ninja/static/css/main.10a3991f.css.map",
-    "main.0dda8b56.js.map": "/ninja/static/js/main.0dda8b56.js.map"
+    "main.97fad02c.css.map": "/ninja/static/css/main.97fad02c.css.map",
+    "main.32fb7f97.js.map": "/ninja/static/js/main.32fb7f97.js.map"
   },
   "entrypoints": [
-    "static/css/main.10a3991f.css",
-    "static/js/main.0dda8b56.js"
+    "static/css/main.97fad02c.css",
+    "static/js/main.32fb7f97.js"
   ]
 }
