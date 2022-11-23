@@ -74,6 +74,12 @@ function Register({ listAccount, handleCheckNoti, idAccounrCurrent }) {
                         bullet2: {value:""},
                         bullet3: {value:""},
                         bullet4: {value:""}
+                    },
+                    pet: {
+                        directionPet: { value: 'Bottom' },
+                        idPet: { value: 0 },
+                        localPet: { x: 0, y: 0 },
+                        status:{value:'idle'}
                     }
                 })
                 set(ref(db, `account/idAccount`), {

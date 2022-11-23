@@ -91,30 +91,41 @@
     }
     &__avatar{
         &__box{
-            width: 48px;
-            height: 48px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
             & img{
-                width: 38px;
-                height: 38px;
+                border-radius: 100%;
+                width: 48px;
+                height: 48px;
             }
         }
+    }
+    &__name__box{
+        width: 135px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color:#ffffff;
+        margin-bottom: 3px;
     }
     &__health{
         margin-left: 2px;
         width: 96px;
         height: 20px;
         &__box{
-            width: 96px;
-            height: 16px;
+            width: 121px;
+            height: 14.5px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 2px;
-            border: 3px solid black;
-            margin-bottom: 5px;
+            // border: 3px solid black;
+            margin-bottom: 2px;
             overflow: hidden;
             font-size: 10px;
             position: relative;
@@ -122,19 +133,33 @@
             box-sizing: border-box;
         }
         &__hp{
+            width: 100px;
+            /* border: 1px solid red; */
+            height: 8px;
             position: absolute;
-            background-color: red;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            right: 2px;
+            overflow: hidden;
+            & img{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+            }
+            // background-color: red;
         }
         &__ki{
+            width: 100px;
+            /* border: 1px solid red; */
+            height: 8px;
             position: absolute;
-            right:20px;
-            background-color: blue;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            right: 2px;
+            overflow: hidden;
+            & img{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+
+            }
+            // background-color: blue;
         }
     
     }

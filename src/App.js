@@ -106,7 +106,7 @@ function App() {
     // }
   },[checkChoose1, checkGame1,checkOnline])
   const [playerCurrent,setPlayerCurrent] = useState(null)
-  const [playerCurrent1,setPlayerCurrent1] = useState(null)
+  const [playerCurrent1, setPlayerCurrent1] = useState(null)
   useEffect(() => {
     if (listCharacter.length > 0 && idAccount!==null) {
       listCharacter.map(e => {
@@ -123,8 +123,6 @@ function App() {
         setGetDB(false);
       }
     }
-    
-    
   }, [listCharacter, idAccount,getDB])
 
   return (

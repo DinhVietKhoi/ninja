@@ -1,15 +1,15 @@
 .pet{
-    width: 48px;
-    height: 48px;
+    width: 72px;
+    height: 72px;
     position: absolute;
     overflow: hidden;
     z-index: 1;
     pointer-events: none;
-
+    // transition:all .5s linear;
     & img{
-        height: 192px;
-        width: 144px;
-        background-size: 192px 144px;
+        width: 216px;
+        height: 288px;
+        background-size: 216px 288px;
     }
     
     &.Right{
@@ -27,7 +27,7 @@
     &.Left{
         &.idle{
             & img{
-                transform: translateY(-144px);
+                transform: translateY(-216px);
             }
         }
         &.walk{
@@ -39,7 +39,7 @@
     &.Top{
         &.idle{
             & img{
-                transform: translateY(-48px);
+                transform: translateY(-72px);
             }
         }
         &.walk{
@@ -51,7 +51,7 @@
     &.Bottom{
         &.idle{
             & img{
-                transform: translateY(-96px);
+                transform: translateY(-144px);
             }
         }
         &.walk{
@@ -68,33 +68,33 @@
     }
     100%{
         
-        transform: translate(-144px,0);
+        transform: translate(-216px,0);
     }
 }
 @keyframes petRunLeft{
+    0%{
+        transform: translate(0,-216px);
+    }
+    100%{
+        
+        transform: translate(-216px,-216px);
+    }
+}
+@keyframes petRunTop{
     0%{
         transform: translate(0,-144px);
     }
     100%{
         
-        transform: translate(-144px,-144px);
-    }
-}
-@keyframes petRunTop{
-    0%{
-        transform: translate(0,-96px);
-    }
-    100%{
-        
-        transform: translate(-144px,-96px);
+        transform: translate(-216px,-144px);
     }
 }
 @keyframes petRunBottom{
     0%{
-        transform: translate(0,-48px);
+        transform: translate(0,-72px);
     }
     100%{
         
-        transform: translate(-144px,-48px);
+        transform: translate(-216px,-72px);
     }
 }

@@ -8,6 +8,48 @@
     z-index: 1;
     width: 100%;
     height: 100%;
+    &__mini{
+        z-index: 100;
+        position: absolute;
+        background-color: grey;
+        border: 2px solid black;
+        box-shadow: 0 0 5px black;
+        border-radius: 5px;
+        top:10px;
+        right:10px;
+        width: 20%;
+        height: 20%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &__full{
+            position: absolute;
+            width: 560px;
+            height: 320px;
+        }
+        &__main{
+            border-radius: 100%;
+            width: 8px;
+            height: 8px;
+            position: relative;
+            top:-8px;
+            left:-16px;
+            background-color: greenyellow;
+            box-sizing: border-box;
+            border: 1px solid black;
+        }
+        &__player{
+            filter:blur(1px);
+            border-radius: 100%;
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            // top:-8px;
+            // left:-16px;
+            background-color: blue;
+        }
+    }
     &__full{
         // pointer-events: none;
         position: absolute;

@@ -20,7 +20,8 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     const [positionPlayer, setPositionPlayer] = useState("Bottom");
     const [statusPlayer, setStatusPlayer] = useState("idle")
     const [playerType,setPlayerType] = useState('yellow')
-    const [petType, setPetType] = useState(1)
+    // const [petType, setPetType] = useState(playerCurrent.pet.idPet.value)
+
     let coliseMap = []
     let boundary = []
     const [boundaryState,setBoundaryState] = useState([])
@@ -74,10 +75,8 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     const [mapMove, setMapMove] = useState(MapPosition)
      // const [playerMove, setPlayerMove] = useState({ x: playerCurrent.localPlayer.x, y: playerCurrent.localPlayer.y})
     const [playerMove, setPlayerMove] = useState(playerPositon)
-    
     let speed = 3;
     let jumTime;
-
     const handleKeyup = (e) => {
 
         if (e.target.nodeName.toLowerCase() === 'input') {
@@ -184,7 +183,6 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     }
     //handle move of player
     const movePlayer = (Event) => {
-        console.log(playerPositon)
         if (Event) {
             setStatusPlayer('idle')
             return;
@@ -209,7 +207,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             // setTopMap(pre=>pre+=speed)
             for (let e of boundary) {
                 let bou = e;
-                bou = { ...bou,y: bou.y + 3};
+                bou = { ...bou,y: bou.y + speed};
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
                     break;
@@ -228,7 +226,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             // setTopMap(pre => pre -= speed)
             for (let e of boundary) {
                 let bou = e;
-                bou = { ...bou,y: bou.y - 3};
+                bou = { ...bou,y: bou.y - speed};
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
                     break;
@@ -253,7 +251,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                 // else if (checkDU === -1) {
                 //     bou = { y:bou.y-1, x: bou.x + 1};
                 // }
-                bou = { ...bou, x: bou.x + 3};
+                bou = { ...bou, x: bou.x + speed};
 
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
@@ -279,7 +277,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                 // else if (checkDU === -1) {
                 //     bou = { y:bou.y-1, x: bou.x - 1};
                 // }
-                bou = { ...bou, x: bou.x - 3};
+                bou = { ...bou, x: bou.x - speed};
 
                 if (handleStop(playerPositon, bou)) {
                     checkMove = false;
@@ -507,14 +505,15 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                         // transform: `translate(${mapMove.x}px,${mapMove.y}px)`,
                         backgroundSize:`3360px 1920px`
                     }}>
-                        <div className='map__pets'>
+                        {/* <div className='map__pets'>
                             <Pet
+                                idAccount={idAccount}
                                 petType={petType}
                                 positionPlayer={positionPlayer}
                                 statusPlayer={statusPlayer}
                                 playerMove={playerMove}
                             />
-                        </div>
+                        </div> */}
                         {
                             listCharacter && listCharacter.map(e => [
                                 e.isOnline.isOnline===true&&e.idPlayer.value!==idAccount&&
@@ -534,6 +533,27 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                                 </div>
                             ])
                         }
+                    </div>
+                    <div className='map__mini'>
+                        <div className='map__mini__full' style={{
+                        background: `url(${map1}) no-repeat`,
+                        top: mapMove.y/6,
+                        left:mapMove.x/6,
+                        // transform: `translate(${mapMove.x}px,${mapMove.y}px)`,
+                        backgroundSize:`560px 320px`
+                        }}>
+                            {
+                            listCharacter && listCharacter.map(e => [
+                                e.isOnline.isOnline===true&&e.idPlayer.value!==idAccount&&
+                                <div key={e} className='map__mini__player' style={{left:(e.localPlayer.x+20)/6,top:(e.localPlayer.y)/6}}>
+                                    
+                                </div>
+                            ])
+                        }
+                        </div>
+                        <div className='map__mini__main' >
+                        </div>
+                        
                     </div>
                     <div className='map__forge' style={{
                         background: `url(${map2}) no-repeat`,
@@ -558,7 +578,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                         checkBull3={checkBull3}
                         prove="main"    
                     />
-                    <GameUI playerCurrent={ playerCurrent} listCharacter={listCharacter} idAccount={idAccount} playerType={playerType} handleEvent={handleEvent} />
+                    <GameUI  playerCurrent={ playerCurrent} listCharacter={listCharacter} idAccount={idAccount} playerType={playerType} handleEvent={handleEvent} />
                 </div>
             </div > 
         </div>

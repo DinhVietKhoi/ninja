@@ -12,11 +12,16 @@ import close from '../assets/UI/close.png'
 import money from '../assets/UI/money.png'
 import btnNext from '../assets/UI/btnNext.png'
 import btnPrev from '../assets/UI/btnPrev.png'
-import voiceBags from '../assets/voices/bags.mp3'
+
 import Skill1 from '../assets/UI/Skill1.png'
 import Skill2 from '../assets/UI/Skill2.png'
 import Skill4 from '../assets/UI/Skill4.png'
 import facesetbox from '../assets/UI/FacesetBox.png'
+import hpsetbox from '../assets/UI/HpsetBox.png'
+import mpsetbox from '../assets/UI/MpsetBox.png'
+import namesetbox from '../assets/UI/NamesetBox.png'
+import hp from '../assets/UI/hp.png'
+import mp from '../assets/UI/mp.png'
 import redNinja_faceset from '../assets/characters/redNinja/UI/Faceset.png'
 import yellowNinja_faceset from '../assets/characters/yellowNinja/UI/Faceset.png'
 import blueNinja_faceset from '../assets/characters/blueNinja/UI/Faceset.png'
@@ -384,7 +389,7 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
             </div>
             <div className='game__info'>
                 <div className='game__avatar'>
-                    <div className='game__avatar__box' style={{background: `url(${facesetbox})`}}>
+                    <div className='game__avatar__box' style={{ background: `url(${facesetbox}) no-repeat`, backgroundSize: 'cover'}}>
                         <img src={playerType === "red"
                             ? redNinja_faceset : playerType === "blue"
                             ? blueNinja_faceset : playerType === "green"
@@ -393,20 +398,23 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
                     </div>
                 </div>
                 <div className='game__health'>
-                    <div className='game__health__box' >
-                        <span className='game__health__hp'></span>
-                        2000/2000
+                    <div className='game__name__box' style={{ background: `url(${namesetbox}) no-repeat`, backgroundSize: 'cover'}}>{playerCurrent.name.value}</div>
+                    <div className='game__health__box'  style={{ background: `url(${hpsetbox}) no-repeat`, backgroundSize: 'cover'}}>
+                        <div className='game__health__hp'>
+                            <img src={hp} alt="" style={{right:'0'}}></img>
+                        </div>
                     </div>
-                    <div className='game__health__box' >
-                        <span  className='game__health__ki'></span>
-                        1500/2000
+                    <div className='game__health__box'  style={{ background: `url(${mpsetbox}) no-repeat`, backgroundSize: 'cover'}}>
+                        <div className='game__health__ki'>
+                            <img src={mp} alt="" style={{right:'0'}}></img>
+                        </div>
                     </div>
                 </div>
             </div>
             <div className='game__menu'>
                 <div className='game__bag'>
                     <div className='game__bag__icon' onClick={handleShowEvent}>
-                        <img src={bag}  alt=""></img>
+                        <img src={bag}  alt="" ></img>
                     </div>
                     {
                         checkEvent&&<div className='game__bag__container'>
