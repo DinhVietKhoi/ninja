@@ -65,6 +65,22 @@
             top:0;
             left:0;
         }
+        & audio{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            opacity: 0;
+        }
+        // &__tele{
+        //     width: 48px;
+        //     height: 48px;
+        //     background-color: red;
+        //     position: absolute;
+        //     bottom:0;
+        //     left:50%;
+        //     transform: translateX(-50%);
+        // }
     }
     &__object{
         width: 288px;
@@ -83,36 +99,7 @@
         z-index: 4;
 
     }
-    &__fire{
-        width:288px;
-        height: 48px;
-        background-size: 48px 48px;
-        background-position: 0 -13px;
-        z-index: 100;
-    }
-    &__flag{
-        width: 240px;
-        height: 180px;
-        z-index: 100;
-        
-        position: absolute;
-        &.flag{
-            left:-350px;
-            top:105px;
-        }
-        &.flag1{
-            left:-350px;
-            top:-516px;
-        }
-        &.flag2{
-            left:560px;
-            top:105px;
-        }
-        &.flag3{
-            left:560px;
-            top:-516px;
-        }
-    }
+    
     &__view{
         position: relative;
         width: 100%;
@@ -138,14 +125,7 @@
             background-repeat: repeat;
         }
     }
-    &__point{
-        position: absolute;
-        top: 232px;
-        left: 472px;
-        width: 48px;
-        height: 48px;
-        background-color: red;
-    }
+    
 }
 
 @keyframes bonHinh{

@@ -13,7 +13,8 @@ import water from '../assets/background/water.gif'
 import GameUI from './GameUI'
 import Player from './Player'
 import Pet from './Pet'
-
+//voice
+import voiceMusic from'../assets/voices/music.mp3'
 function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     
     let Event = false;
@@ -66,7 +67,9 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
     }
 
     let MapPosition = { x: playerCurrent1.localMap.x, y: playerCurrent1.localMap.y }
-    let playerPositon = { x: playerCurrent1.localPlayer.x, y: playerCurrent1.localPlayer.y }
+    let playerPositon = { 
+    x: playerCurrent1.localPlayer.x, y: playerCurrent1.localPlayer.y
+}
     // let MapPosition = { x: 0, y: 0 }
     // let playerPositon = { x: 448, y: 224 }
     // let checkDU = 0;
@@ -455,23 +458,6 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
         }
     }, [])
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     useEffect(() => {
         update(ref(db, `user/${idAccount}/statusPlayer`), {
             value: statusPlayer,
@@ -487,13 +473,72 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
             x: parseInt(mapMove.x),
             y: parseInt(mapMove.y)
         })
+        
     }, [mapMove])
     useEffect(() => {
         update(ref(db, `user/${idAccount}/localPlayer`), {
             x: parseInt(playerMove.x),
             y: parseInt(playerMove.y)
         })
-    },[playerMove])
+    }, [playerMove])
+    // console.log(playerMove)
+    // const time = new Date()
+    const audioMusic = useRef(null)
+    // useEffect(() => {
+    //     // console.log(time.getMinutes())
+    //     // console.log(time.getSeconds())
+    //     if (audioMusic !== null) {
+    //         // console.log(audioMusic.current.currentTime)
+    //     }
+    // }, [audioMusic])
+    
+const [time, setTime] = useState(new Date());
+    useEffect(() => {
+        if (audioMusic !== null) {
+            let currentTimeFake = 0;
+            if (time.getMinutes() < 10) {
+                if (time.getMinutes >5) {
+                    currentTimeFake = (time.getMinutes()-5) * 60 + time.getSeconds();
+                }
+                else if (time.getMinutes <= 5) {
+                    currentTimeFake = time.getMinutes() * 60 + time.getSeconds();
+                }
+            }
+            else {
+                const timeFake = (time.getMinutes() % 10) * 60;
+                currentTimeFake= timeFake + time.getSeconds();
+            }
+            if (currentTimeFake <= 298) {
+                // console.log(currentTimeFake)
+                audioMusic.current.currentTime = currentTimeFake;
+            }
+            else {
+                // console.log(currentTimeFake)
+                audioMusic.current.currentTime = 0;
+                
+            }
+            audioMusic.current.play();
+        }
+    }, [audioMusic])
+    useEffect(() => {
+        if (Math.abs(mapMove.x + 1200) > Math.abs(mapMove.y + 700)) {
+            if (Math.abs(mapMove.x + 1200) >= 800) {
+                audioMusic.current.volume = 0;
+            }
+            else {
+                audioMusic.current.volume =(1-0.00125 * Math.abs(mapMove.x + 1200));
+            }
+        }
+        else {
+            if (Math.abs(mapMove.y + 700) >= 800) {
+                audioMusic.current.volume = 0;
+            }
+            else {
+                audioMusic.current.volume =(1- 0.00125 * Math.abs(mapMove.y + 700));
+            }
+        }
+    }, [mapMove])
+    console.log(mapMove)
     return (
         <div className='game'>
             <div className='map'>
@@ -505,6 +550,8 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                         // transform: `translate(${mapMove.x}px,${mapMove.y}px)`,
                         backgroundSize:`3360px 1920px`
                     }}>
+                        {/* <div className='map__full__tele'></div> */}
+                        <audio ref={audioMusic} src={voiceMusic} controls loop></audio>
                         {/* <div className='map__pets'>
                             <Pet
                                 idAccount={idAccount}
