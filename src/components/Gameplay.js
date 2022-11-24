@@ -497,24 +497,21 @@ const [time, setTime] = useState(new Date());
         if (audioMusic !== null) {
             let currentTimeFake = 0;
             if (time.getMinutes() < 10) {
-                if (time.getMinutes >=5) {
-                    currentTimeFake = (time.getMinutes()-5) * 60 + time.getSeconds();
-                
+                let timeFake = time.getMinutes();
+                if (timeFake >=5) {
+                    currentTimeFake = (timeFake-5) * 60 + time.getSeconds();
                 }
-                else if (time.getMinutes < 5) {
-                    currentTimeFake = time.getMinutes() * 60 + time.getSeconds();
-                
+                else if (timeFake < 5) {
+                    currentTimeFake = timeFake * 60 + time.getSeconds();
                 }
             }
             else {
                 let timeFake = time.getMinutes() % 10;
                 if (timeFake >=5) {
                     currentTimeFake = (timeFake-5) * 60 + time.getSeconds();
-                
                 }
                 else if (timeFake < 5) {
                     currentTimeFake = timeFake * 60 + time.getSeconds();
-                
                 }
             }
             if (currentTimeFake <= 298) {
