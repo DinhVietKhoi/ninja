@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/ninja/static/css/main.d713876b.css",
-    "main.js": "/ninja/static/js/main.1e2c08be.js",
+    "main.css": "/ninja/static/css/main.bc26cedc.css",
+    "main.js": "/ninja/static/js/main.b8b48bf2.js",
+    "static/media/music.mp3": "/ninja/static/media/music.8d74d00a0b7643630cd4.mp3",
     "static/media/bgGreen.jpg": "/ninja/static/media/bgGreen.b3c26c3c10e880f6ad18.jpg",
     "static/media/background.png": "/ninja/static/media/background.aba9b8077c326e670734.png",
     "static/media/backgroundLoad.png": "/ninja/static/media/backgroundLoad.48b7064e6fae1d85a790.png",
@@ -25,11 +26,11 @@
     "static/media/dog4.png": "/ninja/static/media/dog4.724eaffd168e5f4d47e8.png",
     "static/media/bgYellow.jpg": "/ninja/static/media/bgYellow.0a33683da2881ab601fc.jpg",
     "index.html": "/ninja/index.html",
-    "main.d713876b.css.map": "/ninja/static/css/main.d713876b.css.map",
-    "main.1e2c08be.js.map": "/ninja/static/js/main.1e2c08be.js.map"
+    "main.bc26cedc.css.map": "/ninja/static/css/main.bc26cedc.css.map",
+    "main.b8b48bf2.js.map": "/ninja/static/js/main.b8b48bf2.js.map"
   },
   "entrypoints": [
-    "static/css/main.d713876b.css",
-    "static/js/main.1e2c08be.js"
+    "static/css/main.bc26cedc.css",
+    "static/js/main.b8b48bf2.js"
   ]
 }
