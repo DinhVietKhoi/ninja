@@ -507,19 +507,34 @@
             background-color: rgba(221, 129, 93,.5);
             margin-bottom: 10px;
             overflow-y: auto;
+            overflow-x: hidden;
+            max-width: 100%;
+
         }
         &__item{
+            max-width: 100%;
+            margin: 2px 0;
             & .name{
                 color:blue;
                 font-size: 14px;
+                display: inline;
                 &.noti{
                     color:grey;
                 }
                 &.main{
                     color:greenyellow
                 }
+                & span{
+                    font-weight: 700;
+                    padding: 1px;
+                    font-size: 11px;
+                    border: 1px solid yellow;
+                    background-color: red;
+                }
             }
             & .content{
+                display: inline-block;
+                // word-wrap:break-word;
                 &.noti{
                     color:grey;
                 }

@@ -361,6 +361,16 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
         }
         
     }
+    const handleGetTeamWithId = (a) => {
+        if (listCharacter !== null) {
+            let tmp = listCharacter.filter(e => (
+                e.idPlayer.value === a
+            ))
+            
+            return tmp[0].team.value;
+        }
+        
+    }
     return (
         <>
             <div className='game__skill'  >
@@ -390,9 +400,9 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
             <div className='game__info'>
                 <div className='game__avatar'>
                     <div className='game__avatar__box' style={{ background: `url(${facesetbox}) no-repeat`, backgroundSize: 'cover'}}>
-                        <img src={playerType === "red"
-                            ? redNinja_faceset : playerType === "blue"
-                            ? blueNinja_faceset : playerType === "green"
+                        <img src={playerCurrent.type.type === "red"
+                            ? redNinja_faceset : playerCurrent.type.type === "blue"
+                            ? blueNinja_faceset : playerCurrent.type.type === "green"
                             ? greenNinja_faceset : yellowNinja_faceset} alt="">
                         </img>
                     </div>
@@ -513,7 +523,7 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
                                                         </>
                                                             :
                                                             <>
-                                                                <span className={`name ${idAccount === e.idPlayer && 'main'}`}>{handleGetNameWithId(e.idPlayer)}:</span>
+                                                                <div className={`name ${idAccount === e.idPlayer && 'main'}`}><span>{handleGetTeamWithId(e.idPlayer)}</span>-{handleGetNameWithId(e.idPlayer)}:</div>
                                                                 <span className='content'>{e.content}</span>
                                                             </>
                                                     }
@@ -530,7 +540,7 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
                                                         </>
                                                             :arrIdSameArea.includes(e.idPlayer) === true&&
                                                             <>
-                                                                <span className={`name ${idAccount === e.idPlayer && 'main'}`}>{handleGetNameWithId(e.idPlayer)}:</span>
+                                                                <div className={`name ${idAccount === e.idPlayer && 'main'}`}><span>{handleGetTeamWithId(e.idPlayer)}</span>-{handleGetNameWithId(e.idPlayer)}:</div>
                                                                 <span className='content'>{e.content}</span>
                                                             </>
                                                     }
