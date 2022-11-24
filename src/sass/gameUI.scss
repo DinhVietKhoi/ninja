@@ -602,6 +602,9 @@
             padding:2px;
             border-radius: 4px;
             background-color: rgb(230, 106, 58);
+            &.disable{
+                opacity: 0.6;
+            }
         }
     }
     

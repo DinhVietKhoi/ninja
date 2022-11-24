@@ -80,6 +80,9 @@ function Register({ listAccount, handleCheckNoti, idAccounrCurrent }) {
                         idPet: { value: 0 },
                         localPet: { x: 0, y: 0 },
                         status:{value:'idle'}
+                    },
+                    message: {
+                        content:''
                     }
                 })
                 set(ref(db, `account/idAccount`), {

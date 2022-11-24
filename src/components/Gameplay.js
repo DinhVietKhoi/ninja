@@ -25,7 +25,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
 
     let coliseMap = []
     let boundary = []
-    const [boundaryState,setBoundaryState] = useState([])
+    // const [boundaryState,setBoundaryState] = useState([])
     //check key move
     const [keyState, setKeyState] = useState(
         {
@@ -424,7 +424,7 @@ function Gameplay({ idAccount, listCharacter, playerCurrent, playerCurrent1 }) {
                         x: j * 48,
                         y: i * 48
                     }]
-                    setBoundaryState(pre=>[...pre,{x:j*48,y:i*48}])
+                    // setBoundaryState(pre=>[...pre,{x:j*48,y:i*48}])
                 }
             })
         })
@@ -497,29 +497,36 @@ const [time, setTime] = useState(new Date());
         if (audioMusic !== null) {
             let currentTimeFake = 0;
             if (time.getMinutes() < 10) {
-                if (time.getMinutes >5) {
+                if (time.getMinutes >=5) {
                     currentTimeFake = (time.getMinutes()-5) * 60 + time.getSeconds();
+                
                 }
-                else if (time.getMinutes <= 5) {
+                else if (time.getMinutes < 5) {
                     currentTimeFake = time.getMinutes() * 60 + time.getSeconds();
+                
                 }
             }
             else {
-                const timeFake = (time.getMinutes() % 10) * 60;
-                currentTimeFake= timeFake + time.getSeconds();
+                let timeFake = time.getMinutes() % 10;
+                if (timeFake >=5) {
+                    currentTimeFake = (timeFake-5) * 60 + time.getSeconds();
+                
+                }
+                else if (timeFake < 5) {
+                    currentTimeFake = timeFake * 60 + time.getSeconds();
+                
+                }
             }
             if (currentTimeFake <= 298) {
-                // console.log(currentTimeFake)
                 audioMusic.current.currentTime = currentTimeFake;
+                audioMusic.current.play();
             }
             else {
-                // console.log(currentTimeFake)
                 audioMusic.current.currentTime = 0;
-                
+                audioMusic.current.play();
             }
-            audioMusic.current.play();
         }
-    }, [audioMusic])
+    }, [audioMusic,time])
     useEffect(() => {
         if (Math.abs(mapMove.x + 1200) > Math.abs(mapMove.y + 700)) {
             if (Math.abs(mapMove.x + 1200) >= 800) {
@@ -538,7 +545,6 @@ const [time, setTime] = useState(new Date());
             }
         }
     }, [mapMove])
-    console.log(mapMove)
     return (
         <div className='game'>
             <div className='map'>
@@ -566,6 +572,7 @@ const [time, setTime] = useState(new Date());
                                 e.isOnline.isOnline===true&&e.idPlayer.value!==idAccount&&
                                 <div key={e} className='map__full__player' style={{transform:`translate(${e.localPlayer.x+20}px,${e.localPlayer.y}px)`}}>
                                     <Player
+                                        messPlayer={e.message.content}
                                         statusPlayer={e.statusPlayer.value}
                                         playerType={e.type.type}
                                         namePlayer={e.name.value}
@@ -614,6 +621,7 @@ const [time, setTime] = useState(new Date());
                         </div>
                     </div>
                     <Player
+                        messPlayer={playerCurrent.message.content}
                         namePlayer={playerCurrent.name.value}
                         teamPlayer={playerCurrent.team.value}
                         statusPlayer={statusPlayer}

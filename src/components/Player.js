@@ -46,10 +46,13 @@ import greenNinja_skill1 from '../assets/characters/greenNinja/Skill/Skill1.png'
 import greenNinja_skill2 from '../assets/characters/greenNinja/Skill/Skill2.png'
 import greenNinja_skill3 from '../assets/characters/greenNinja/Skill/Skill3.png'
 import greenNinja_skill4 from '../assets/characters/greenNinja/Skill/Skill4.png'
-function Player({namePlayer,teamPlayer,playerType,statusPlayer,positionPlayer,bullet1,bullet2,bullet4,checkBull3,prove}) {
+function Player({messPlayer,namePlayer,teamPlayer,playerType,statusPlayer,positionPlayer,bullet1,bullet2,bullet4,checkBull3,prove}) {
     return (
         <>
             <div className="player__container">
+                {
+                    messPlayer!==''&&<div className='player__message'><p>{messPlayer}</p></div>
+                }
                     {
                         playerType === 'red' ?
                             <>

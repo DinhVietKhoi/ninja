@@ -83,6 +83,7 @@ function App() {
     let check;
     if (idAccount !== null) {
       onDisconnect(ref(db, `user/${idAccount}/isOnline`)).set({ isOnline: false });
+      onDisconnect(ref(db, `user/${idAccount}/message/`)).set({ content:'' });
       onValue((ref(db,`user/${idAccount}/isOnline`)),(snapshot)=>{
         const data = snapshot.val();
         check = data.isOnline;

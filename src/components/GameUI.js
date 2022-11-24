@@ -309,6 +309,7 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
             if (listChatCurrent.length > 100) {
 
                 let id = idChatCurrent;
+                
                 set(ref(db, `chat/all/content/`), {
                 })
                 set(ref(db, `chat/all/content/${id}`), {
@@ -323,34 +324,73 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
         }
     }, [listChatCurrent,arrIdSameArea,channel,statusChatBox,idChatCurrent])
     const [inputCurrent, setInputCurrent] = useState('')
+    let timer;
+    const [checkChat,setCheckChat] = useState(true)
     const handleSubmit = (e) => {
         let id = idChatCurrent;
         if (e.key === 'Enter' && inputCurrent !== '') {
-            set(ref(db, `chat/all/content/${id}`), {
-                content: inputCurrent,
-                idPlayer: idAccount,
-                type: channel,
-            })
-            
+            if (channel === 'public' && checkChat) {
+                setCheckChat(false)
+                set(ref(db, `chat/all/content/${id}`), {
+                    content: inputCurrent,
+                    idPlayer: idAccount,
+                    type: channel,
+                })
+                set(ref(db, `user/${idAccount}/message/`), {
+                    content:inputCurrent
+                })
+                setTimeout(() => {
+                    set(ref(db, `user/${idAccount}/message/`), {
+                        content:''
+                    })
+                    setCheckChat(true)
+                },3000)
+            }
+            else if(channel === 'private') {
+                set(ref(db, `chat/all/content/${id}`), {
+                    content: inputCurrent,
+                    idPlayer: idAccount,
+                    type: channel,
+                })
+                
+            }
             set(ref(db, `chat/all/idCurrent`), {
                 value: id += 1
             })
             setInputCurrent('')
         }
         if (e === 'click' && inputCurrent !== '') {
-            set(ref(db, `chat/all/content/${id}`), {
-                content: inputCurrent,
-                idPlayer: idAccount,
-                type: channel,
+            if (channel === 'public' && checkChat) {
+                setCheckChat(false)
+                set(ref(db, `chat/all/content/${id}`), {
+                    content: inputCurrent,
+                    idPlayer: idAccount,
+                    type: channel,
+                })
+                set(ref(db, `user/${idAccount}/message/`), {
+                    content:inputCurrent
+                })
+                setTimeout(() => {
+                    set(ref(db, `user/${idAccount}/message/`), {
+                        content:''
+                    })
+                    setCheckChat(true)
+                },3000)
+            }
+            else if(channel === 'private'){
+                set(ref(db, `chat/all/content/${id}`), {
+                    content: inputCurrent,
+                    idPlayer: idAccount,
+                    type: channel,
+                })
+            }
+            set(ref(db, `chat/all/idCurrent`), {
+                value: id += 1
             })
             setInputCurrent('')
+            
         }
-        // console.log(e.target[0].value)
-
-        // e.preventDefault();  
-
     }
-    // console.log(inputCurrent)
     const handleGetNameWithId = (a) => {
         if (listCharacter !== null) {
             let tmp = listCharacter.filter(e => (
@@ -570,7 +610,7 @@ function GameUI({playerCurrent, listCharacter, idAccount, playerType, handleEven
                             ></input>
                             <span
                                 onClick={() => handleSubmit('click')}
-                                className='game__chat__submit'
+                                className={`game__chat__submit ${checkChat===false&&'disable'}`}
                             >gửi</span>
                         </div>
                     </div>
